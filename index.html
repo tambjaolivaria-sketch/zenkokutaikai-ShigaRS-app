@@ -577,22 +577,27 @@
     }
 
     .record-list-row.cancelled {
-      opacity: 0.55;
-      background: #f1f5f9;
-      text-decoration: line-through;
+      opacity: 1;
+      background: #fee2e2;
+      border-color: #fecaca;
     }
 
     .record-list-row button {
       min-height: 42px;
       border-radius: 12px;
       color: white;
-      background: var(--purple);
+      background: #64748b;
       font-size: 18px;
       font-weight: 900;
     }
 
-    .record-list-row button.cancel-record-button { background: var(--orange); }
-    .record-list-row button.restore-record-button { background: var(--blue); }
+    .record-list-row button.cancel-record-button {
+      background: var(--red);
+    }
+
+    .record-list-row button.restore-record-button {
+      background: #64748b;
+    }
 
     .record-icons {
       display: flex;
@@ -925,7 +930,7 @@
     function saveSettingsAndReturn() { for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) { var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, ''); var price = Number(document.getElementById('setPrice' + i).value); var icon = document.getElementById('setIcon' + i).value; if (!name) { alert('商品名は空欄にできません。'); return; } if (isNaN(price) || price < 0) { alert('価格は0円以上の数字で入力してください。'); return; } settingProducts[i].name = name; settingProducts[i].price = Math.round(price); settingProducts[i].icon = normalizeIcon(icon); } products = cloneProducts(settingProducts); saveProducts(); backToMain(); showNotice('商品設定を保存しました。', 1400); }
 
     function openRecords() { renderRecordsList(); showOnly('recordsScreen'); }
-    function renderRecordsList() { var html = ''; if (records.length === 0) html = '<div class="page-note">記録はありません。</div>'; for (var i = records.length - 1; i >= 0; i--) { var cls = records[i].cancelled ? 'record-list-row cancelled' : 'record-list-row'; var cancelText = records[i].cancelled ? '取消OFF' : '取消ON'; var cancelClass = records[i].cancelled ? 'restore-record-button' : 'cancel-record-button'; var badge = records[i].cancelled ? '<span class="cancel-badge">取消中</span>' : ''; html += '<div class="' + cls + '"><div>' + esc(records[i].datetime) + ' ' + badge + '</div><div class="record-icons">' + recordIconsHTML(records[i]) + '</div><div>' + yen(records[i].paidTotal) + '</div><button onclick="openEditRecord(' + i + ')">編集</button><button class="' + cancelClass + '" onclick="toggleRecordCancelFromList(' + i + ')">' + cancelText + '</button></div>'; } document.getElementById('recordsList').innerHTML = html; }
+    function renderRecordsList() { var html = ''; if (records.length === 0) html = '<div class="page-note">記録はありません。</div>'; for (var i = records.length - 1; i >= 0; i--) { var cls = records[i].cancelled ? 'record-list-row cancelled' : 'record-list-row'; var cancelText = '取消'; var cancelClass = records[i].cancelled ? 'restore-record-button' : 'cancel-record-button'; var badge = records[i].cancelled ? '<span class="cancel-badge">取消中</span>' : ''; html += '<div class="' + cls + '"><div>' + esc(records[i].datetime) + ' ' + badge + '</div><div class="record-icons">' + recordIconsHTML(records[i]) + '</div><div>' + yen(records[i].paidTotal) + '</div><button onclick="openEditRecord(' + i + ')">編集</button><button class="' + cancelClass + '" onclick="toggleRecordCancelFromList(' + i + ')">' + cancelText + '</button></div>'; } document.getElementById('recordsList').innerHTML = html; }
     function recordIconsHTML(record) { var html = ''; for (var i = 0; i < record.items.length; i++) if (record.items[i].count > 0) html += '<span class="record-icon-count">' + iconHTML(record.items[i].icon || productIconById(record.items[i].id)) + record.items[i].count + '</span>'; return html || '-'; }
     function productIconById(id) { for (var i = 0; i < products.length; i++) if (products[i].id === id) return products[i].icon; return 'wappen-blue'; }
     function toggleRecordCancelFromList(index) { if (index < 0 || index >= records.length) return; records[index].cancelled = !records[index].cancelled; saveRecords(); renderRecordsList(); updateScreen(); }
