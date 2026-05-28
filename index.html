@@ -688,41 +688,59 @@
       background: radial-gradient(circle at 50% 50%, #ffffff 0 38%, #fecaca 40% 58%, #ef4444 60% 100%);
     }
 
-    .icon.tanuki-blue, .icon.tanuki-red {
-      border-radius: 45% 45% 48% 48%;
-      border: 2px solid #713f12;
-      background:
-        radial-gradient(circle at 10px 12px, #111827 0 2px, transparent 3px),
-        radial-gradient(circle at 20px 12px, #111827 0 2px, transparent 3px),
-        radial-gradient(ellipse at 15px 22px, #fde68a 0 7px, transparent 8px),
-        #a16207;
+    .icon.tanuki-blue,
+    .icon.tanuki-red {
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      position: relative;
+      flex-shrink: 0;
+      background: currentColor;
+      clip-path: polygon(
+        22% 18%,
+        30% 4%,
+        40% 16%,
+        50% 10%,
+        60% 16%,
+        70% 4%,
+        78% 18%,
+        82% 34%,
+        82% 62%,
+        74% 84%,
+        50% 96%,
+        26% 84%,
+        18% 62%,
+        18% 34%
+      );
     }
 
-    .icon.tanuki-blue::before, .icon.tanuki-red::before {
+    .icon.tanuki-blue { color: #2563eb; }
+    .icon.tanuki-red { color: #dc2626; }
+
+    .icon.tanuki-blue::before,
+    .icon.tanuki-red::before {
       content: "";
       position: absolute;
-      left: 1px;
-      right: 1px;
-      top: -2px;
-      height: 8px;
+      left: 8px;
+      top: 13px;
+      width: 14px;
+      height: 11px;
+      background: white;
+      border-radius: 50% 50% 55% 55%;
+    }
+
+    .icon.tanuki-blue::after,
+    .icon.tanuki-red::after {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      width: 8px;
+      height: 5px;
+      background: white;
       border-radius: 50%;
-      background: #78350f;
-      border: 2px solid #451a03;
+      opacity: 0.9;
     }
-
-    .icon.tanuki-blue::after, .icon.tanuki-red::after {
-      content: "";
-      position: absolute;
-      left: 9px;
-      bottom: 3px;
-      width: 12px;
-      height: 6px;
-      border-radius: 6px;
-      border: 2px solid white;
-    }
-
-    .icon.tanuki-blue::after { background: #2563eb; }
-    .icon.tanuki-red::after { background: #dc2626; }
 
     .icon.towel {
       border-radius: 5px;
@@ -854,7 +872,7 @@
 
     function initApp() { loadProducts(); loadRecords(); updateScreen(); showNotice('起動しました。', 1200); }
 
-    function loadProducts() { var saved = safeGet(STORAGE_PRODUCTS); if (!saved) return; try { var parsed = JSON.parse(saved); for (var i = 0; i < MAX_PRODUCTS; i++) if (parsed[i]) { products[i].name = parsed[i].name ? String(parsed[i].name) : products[i].name; products[i].price = !isNaN(Number(parsed[i].price)) ? Number(parsed[i].price) : products[i].price; products[i].active = parsed[i].active ? true : false; products[i].icon = parsed[i].icon ? String(parsed[i].icon) : products[i].icon; } } catch(e) {} }
+    function loadProducts() { var saved = safeGet(STORAGE_PRODUCTS); if (!saved) return; try { var parsed = JSON.parse(saved); for (var i = 0; i < MAX_PRODUCTS; i++) if (parsed[i]) { products[i].name = parsed[i].name ? String(parsed[i].name) : products[i].name; products[i].price = !isNaN(Number(parsed[i].price)) ? Number(parsed[i].price) : products[i].price; products[i].active = parsed[i].active ? true : false; products[i].icon = parsed[i].icon ? normalizeIcon(String(parsed[i].icon)) : products[i].icon; } } catch(e) {} }
     function loadRecords() { var saved = safeGet(STORAGE_RECORDS); if (!saved) return; try { var parsed = JSON.parse(saved); if (parsed && parsed.length) records = parsed; for (var i = 0; i < records.length; i++) if (typeof records[i].cancelled === 'undefined') records[i].cancelled = false; } catch(e) {} }
     function safeGet(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
     function saveProducts() { try { localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); } catch(e) {} }
@@ -871,7 +889,14 @@
     function esc(text) { return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     function yen(value) { return Number(value || 0).toLocaleString('ja-JP') + '円'; }
     function iconHTML(type) { return '<span class="icon ' + iconClass(type) + '"></span>'; }
-    function iconClass(type) { if (type === 'pottery-blue') return 'pottery-blue'; if (type === 'pottery-red') return 'pottery-red'; if (type === 'towel') return 'towel'; return 'wappen'; }
+    function iconClass(type) { return normalizeIcon(type); }
+    function normalizeIcon(icon) {
+      if (icon === 'wappen-blue' || icon === 'wappen-red' || icon === 'tanuki-blue' || icon === 'tanuki-red' || icon === 'towel') return icon;
+      if (icon === 'wappen') return 'wappen-blue';
+      if (icon === 'pottery-blue') return 'tanuki-blue';
+      if (icon === 'pottery-red') return 'tanuki-red';
+      return 'wappen-blue';
+    }
     function getRegularTotal() { var sum = 0; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) sum += products[i].price * counts[i]; return sum; }
     function getTotalCount() { var sum = 0; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) sum += counts[i]; return sum; }
 
@@ -891,18 +916,18 @@
     function backToMain() { showOnly('mainScreen'); updateScreen(); }
 
     function openSettings() { settingProducts = cloneProducts(products); renderSettings(); showOnly('settingsScreen'); }
-    function cloneProducts(source) { var arr = []; for (var i = 0; i < MAX_PRODUCTS; i++) arr.push({ id: source[i].id, name: source[i].name, price: source[i].price, active: source[i].active, icon: source[i].icon || 'wappen' }); return arr; }
-    function renderSettings() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) html += '<div class="settings-row"><select id="setIcon' + i + '"><option value="wappen"' + sel(settingProducts[i].icon, 'wappen') + '>○</option><option value="pottery-blue"' + sel(settingProducts[i].icon, 'pottery-blue') + '>信楽青</option><option value="pottery-red"' + sel(settingProducts[i].icon, 'pottery-red') + '>信楽赤</option><option value="towel"' + sel(settingProducts[i].icon, 'towel') + '>手拭</option></select><input id="setName' + i + '" type="text" value="' + esc(settingProducts[i].name) + '"><input class="settings-price-input" id="setPrice' + i + '" type="number" min="0" step="1" value="' + settingProducts[i].price + '"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(' + i + ')">消去</button></div>'; document.getElementById('settingsList').innerHTML = html; }
+    function cloneProducts(source) { var arr = []; for (var i = 0; i < MAX_PRODUCTS; i++) arr.push({ id: source[i].id, name: source[i].name, price: source[i].price, active: source[i].active, icon: normalizeIcon(source[i].icon || 'wappen-blue') }); return arr; }
+    function renderSettings() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) html += '<div class="settings-row"><select id="setIcon' + i + '"><option value="wappen-blue"' + sel(settingProducts[i].icon, 'wappen-blue') + '>○青</option><option value="wappen-red"' + sel(settingProducts[i].icon, 'wappen-red') + '>○赤</option><option value="tanuki-blue"' + sel(settingProducts[i].icon, 'tanuki-blue') + '>狸青</option><option value="tanuki-red"' + sel(settingProducts[i].icon, 'tanuki-red') + '>狸赤</option><option value="towel"' + sel(settingProducts[i].icon, 'towel') + '>手拭</option></select><input id="setName' + i + '" type="text" value="' + esc(settingProducts[i].name) + '"><input class="settings-price-input" id="setPrice' + i + '" type="number" min="0" step="1" value="' + settingProducts[i].price + '"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(' + i + ')">消去</button></div>'; document.getElementById('settingsList').innerHTML = html; }
     function sel(a, b) { return a === b ? ' selected' : ''; }
-    function addSettingProduct() { for (var i = 0; i < MAX_PRODUCTS; i++) if (!settingProducts[i].active) { settingProducts[i].active = true; settingProducts[i].name = '新商品' + (i + 1); settingProducts[i].price = 0; settingProducts[i].icon = 'wappen'; renderSettings(); return; } alert('商品は最大10個までです。'); }
+    function addSettingProduct() { for (var i = 0; i < MAX_PRODUCTS; i++) if (!settingProducts[i].active) { settingProducts[i].active = true; settingProducts[i].name = '新商品' + (i + 1); settingProducts[i].price = 0; settingProducts[i].icon = 'wappen-blue'; renderSettings(); return; } alert('商品は最大10個までです。'); }
     function deleteSettingProduct(index) { var activeCount = 0; for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) activeCount++; if (activeCount <= 1) { alert('商品は最低1つ必要です。'); return; } if (!confirm('この商品を消去しますか？')) return; settingProducts[index].active = false; renderSettings(); }
     function closeSettingsWithoutSaving() { backToMain(); showNotice('設定を保存せずに戻りました。', 1200); }
-    function saveSettingsAndReturn() { for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) { var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, ''); var price = Number(document.getElementById('setPrice' + i).value); var icon = document.getElementById('setIcon' + i).value; if (!name) { alert('商品名は空欄にできません。'); return; } if (isNaN(price) || price < 0) { alert('価格は0円以上の数字で入力してください。'); return; } settingProducts[i].name = name; settingProducts[i].price = Math.round(price); settingProducts[i].icon = icon; } products = cloneProducts(settingProducts); saveProducts(); backToMain(); showNotice('商品設定を保存しました。', 1400); }
+    function saveSettingsAndReturn() { for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) { var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, ''); var price = Number(document.getElementById('setPrice' + i).value); var icon = document.getElementById('setIcon' + i).value; if (!name) { alert('商品名は空欄にできません。'); return; } if (isNaN(price) || price < 0) { alert('価格は0円以上の数字で入力してください。'); return; } settingProducts[i].name = name; settingProducts[i].price = Math.round(price); settingProducts[i].icon = normalizeIcon(icon); } products = cloneProducts(settingProducts); saveProducts(); backToMain(); showNotice('商品設定を保存しました。', 1400); }
 
     function openRecords() { renderRecordsList(); showOnly('recordsScreen'); }
     function renderRecordsList() { var html = ''; if (records.length === 0) html = '<div class="page-note">記録はありません。</div>'; for (var i = records.length - 1; i >= 0; i--) { var cls = records[i].cancelled ? 'record-list-row cancelled' : 'record-list-row'; var cancelText = records[i].cancelled ? '取消OFF' : '取消ON'; var cancelClass = records[i].cancelled ? 'restore-record-button' : 'cancel-record-button'; var badge = records[i].cancelled ? '<span class="cancel-badge">取消中</span>' : ''; html += '<div class="' + cls + '"><div>' + esc(records[i].datetime) + ' ' + badge + '</div><div class="record-icons">' + recordIconsHTML(records[i]) + '</div><div>' + yen(records[i].paidTotal) + '</div><button onclick="openEditRecord(' + i + ')">編集</button><button class="' + cancelClass + '" onclick="toggleRecordCancelFromList(' + i + ')">' + cancelText + '</button></div>'; } document.getElementById('recordsList').innerHTML = html; }
     function recordIconsHTML(record) { var html = ''; for (var i = 0; i < record.items.length; i++) if (record.items[i].count > 0) html += '<span class="record-icon-count">' + iconHTML(record.items[i].icon || productIconById(record.items[i].id)) + record.items[i].count + '</span>'; return html || '-'; }
-    function productIconById(id) { for (var i = 0; i < products.length; i++) if (products[i].id === id) return products[i].icon; return 'wappen'; }
+    function productIconById(id) { for (var i = 0; i < products.length; i++) if (products[i].id === id) return products[i].icon; return 'wappen-blue'; }
     function toggleRecordCancelFromList(index) { if (index < 0 || index >= records.length) return; records[index].cancelled = !records[index].cancelled; saveRecords(); renderRecordsList(); updateScreen(); }
     function openEditRecord(index) { editingIndex = index; var record = records[index]; document.getElementById('editTitle').textContent = record.datetime + ' の記録'; var html = ''; for (var i = 0; i < record.items.length; i++) html += '<div class="edit-row">' + iconHTML(record.items[i].icon || productIconById(record.items[i].id)) + '<div>' + esc(record.items[i].name) + '</div><input id="editCount' + i + '" type="number" min="0" step="1" value="' + record.items[i].count + '"><input id="editPrice' + i + '" type="number" min="0" step="1" value="' + record.items[i].price + '"></div>'; document.getElementById('editList').innerHTML = html; document.getElementById('editPaidTotal').value = record.paidTotal; updateEditCancelButton(); showOnly('editScreen'); }
     function updateEditCancelButton() { var btn = document.getElementById('editCancelToggle'); if (editingIndex < 0) return; btn.textContent = records[editingIndex].cancelled ? '取消OFFにする' : '取消ONにする'; btn.className = records[editingIndex].cancelled ? 'toggle-cancel cancelled' : 'toggle-cancel'; }
