@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>滋賀RS会計システム-全国大会2026千葉</title>
   <style>
     :root {
@@ -11,14 +11,12 @@
       --text: #111827;
       --muted: #6b7280;
       --line: #d1d5db;
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --danger: #dc2626;
-      --danger-dark: #b91c1c;
-      --ok: #16a34a;
-      --ok-dark: #15803d;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --red: #dc2626;
+      --brown: #7c2d12;
       --orange: #f59e0b;
-      --orange-dark: #d97706;
+      --dark: #111827;
       --shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
       --radius: 18px;
     }
@@ -50,7 +48,7 @@
 
     .app {
       width: 100vw;
-      height: 100dvh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       padding: 10px;
@@ -59,49 +57,37 @@
 
     .header {
       height: 54px;
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      background: var(--panel);
-      border-radius: var(--radius);
       padding: 0 18px;
-      box-shadow: var(--shadow);
+      gap: 14px;
       flex-shrink: 0;
     }
 
     .title {
-      font-size: clamp(18px, 2.4vw, 28px);
+      font-size: 28px;
       font-weight: 900;
-      letter-spacing: 0.01em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .record-count {
-      font-size: clamp(18px, 2vw, 24px);
+      color: var(--blue);
+      font-size: 24px;
       font-weight: 900;
-      color: var(--primary);
       white-space: nowrap;
-    }
-
-    .screen {
-      display: none;
-    }
-
-    .screen.active.main-screen {
-      display: grid;
-    }
-
-    .screen.active.settings-screen {
-      display: flex;
     }
 
     .main-screen {
       flex: 1;
       min-height: 0;
-      grid-template-columns: minmax(420px, 1.45fr) minmax(270px, 0.85fr) minmax(300px, 1fr);
+      display: grid;
+      grid-template-columns: 1.45fr 0.85fr 1fr;
       gap: 10px;
     }
 
@@ -118,29 +104,29 @@
     }
 
     .panel-title {
-      font-size: clamp(18px, 1.8vw, 22px);
+      font-size: 22px;
       font-weight: 900;
-      line-height: 1.15;
       flex-shrink: 0;
     }
 
     .products {
+      flex: 1;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      flex: 1;
-      min-height: 0;
     }
 
     .product-row {
+      flex: 1;
+      min-height: 56px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) 52px 86px;
       gap: 8px;
-      height: calc((100% - 40px) / 5);
-      min-height: 58px;
     }
 
     .product-main {
+      min-width: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -152,16 +138,14 @@
       border: 2px solid #c7d9ff;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.14);
-      min-width: 0;
     }
 
-    .product-main:active {
-      transform: scale(0.99);
-      background: #dbeafe;
+    .product-main:active, .key:active, .action-button:active, .restore-button:active {
+      transform: scale(0.98);
     }
 
     .product-name {
-      font-size: clamp(17px, 2vw, 24px);
+      font-size: 24px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -169,7 +153,7 @@
     }
 
     .product-price {
-      font-size: clamp(16px, 1.8vw, 22px);
+      font-size: 22px;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -185,34 +169,33 @@
     }
 
     .times-block {
-      font-size: clamp(20px, 2.3vw, 28px);
+      font-size: 28px;
       color: var(--muted);
     }
 
     .count-block {
-      font-size: clamp(17px, 2vw, 24px);
+      font-size: 24px;
     }
 
     .summary-list {
       display: flex;
       flex-direction: column;
       gap: 7px;
-      flex: 0 1 auto;
       min-height: 0;
     }
 
     .summary-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
+      min-height: 36px;
       padding: 8px 10px;
       border-radius: 12px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
-      font-size: clamp(14px, 1.5vw, 18px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 18px;
       font-weight: 800;
-      min-height: 36px;
     }
 
     .summary-name {
@@ -236,23 +219,23 @@
     }
 
     .amount-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
+      min-height: 46px;
       border-radius: 14px;
       background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      font-size: 20px;
       font-weight: 900;
-      font-size: clamp(16px, 1.6vw, 20px);
-      min-height: 46px;
     }
 
     .amount-box.paid {
-      background: #ecfdf5;
-      color: #065f46;
-      border: 2px solid #a7f3d0;
-      font-size: clamp(19px, 1.9vw, 24px);
       min-height: 52px;
+      background: #ecfdf5;
+      border: 2px solid #a7f3d0;
+      color: #065f46;
+      font-size: 24px;
     }
 
     .amount-box.discount {
@@ -269,46 +252,37 @@
     .action-button {
       min-height: 46px;
       border-radius: 14px;
-      font-size: clamp(15px, 1.5vw, 19px);
-      font-weight: 900;
       color: white;
+      font-size: 18px;
+      font-weight: 900;
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
     }
 
     .record-button {
-      background: var(--ok);
       grid-column: span 2;
       min-height: 58px;
-      font-size: clamp(21px, 2.2vw, 28px);
+      background: var(--green);
+      font-size: 28px;
     }
 
-    .record-button:active { background: var(--ok-dark); }
-    .reset-button { background: var(--danger); }
-    .reset-button:active { background: var(--danger-dark); }
-    .cancel-button { background: #7c2d12; }
+    .reset-button { background: var(--red); }
+    .cancel-button { background: var(--brown); }
     .settings-button { background: #4b5563; }
-    .csv-button { background: var(--primary); }
-    .csv-button:active { background: var(--primary-dark); }
+    .csv-button { background: var(--blue); }
     .finish-button {
-      background: var(--orange);
       grid-column: span 2;
+      background: var(--orange);
     }
-    .finish-button:active { background: var(--orange-dark); }
 
     .notice {
       min-height: 22px;
-      font-size: clamp(13px, 1.4vw, 17px);
+      font-size: 16px;
       font-weight: 800;
-      color: var(--primary);
-      line-height: 1.25;
-    }
-
-    .keypad-panel {
-      gap: 10px;
+      color: var(--blue);
     }
 
     .keypad-display-label {
-      font-size: clamp(16px, 1.6vw, 20px);
+      font-size: 20px;
       font-weight: 900;
       color: var(--muted);
       flex-shrink: 0;
@@ -316,45 +290,40 @@
 
     .keypad-display {
       height: 76px;
+      border-radius: 18px;
+      background: var(--dark);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       padding: 0 18px;
-      border-radius: 18px;
-      background: #111827;
-      color: white;
-      font-size: clamp(32px, 4.2vw, 52px);
+      font-size: 52px;
       font-weight: 900;
       letter-spacing: 0.03em;
       flex-shrink: 0;
     }
 
     .keypad {
+      flex: 1;
+      min-height: 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      flex: 1;
-      min-height: 0;
     }
 
     .key {
       min-height: 58px;
       border-radius: 18px;
-      background: #ffffff;
+      background: white;
       border: 2px solid var(--line);
-      font-size: clamp(26px, 3.5vw, 44px);
+      font-size: 44px;
       font-weight: 900;
       color: var(--text);
       box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
     }
 
-    .key:active {
-      transform: scale(0.98);
-      background: #e5e7eb;
-    }
-
     .key.control {
-      font-size: clamp(20px, 2.4vw, 30px);
+      font-size: 30px;
       background: #fef3c7;
       border-color: #fcd34d;
     }
@@ -362,9 +331,9 @@
     .restore-button {
       min-height: 56px;
       border-radius: 18px;
-      background: var(--primary);
+      background: var(--blue);
       color: white;
-      font-size: clamp(19px, 2.2vw, 26px);
+      font-size: 26px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
       flex-shrink: 0;
@@ -373,6 +342,7 @@
     .settings-screen {
       flex: 1;
       min-height: 0;
+      display: none;
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -382,36 +352,29 @@
       overflow: hidden;
     }
 
-    .settings-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      flex-shrink: 0;
-    }
-
     .settings-title {
-      font-size: clamp(24px, 3vw, 34px);
+      font-size: 34px;
       font-weight: 900;
     }
 
     .settings-note {
       margin-top: 4px;
-      font-size: clamp(15px, 1.6vw, 18px);
+      font-size: 18px;
       font-weight: 800;
       color: var(--muted);
     }
 
     .settings-list {
+      flex: 1;
+      min-height: 0;
+      max-width: 980px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-width: 980px;
-      min-height: 0;
-      flex: 1;
     }
 
     .settings-row {
+      min-height: 64px;
       display: grid;
       grid-template-columns: minmax(260px, 1fr) 190px 48px;
       align-items: center;
@@ -420,7 +383,6 @@
       border-radius: 16px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
-      min-height: 64px;
     }
 
     .settings-row input {
@@ -428,14 +390,10 @@
       border-radius: 14px;
       border: 2px solid var(--line);
       padding: 0 12px;
-      font-size: clamp(18px, 2vw, 24px);
+      font-size: 24px;
       font-weight: 800;
       background: white;
       user-select: text;
-    }
-
-    .settings-name-input {
-      text-align: left;
     }
 
     .settings-price-input {
@@ -443,7 +401,7 @@
     }
 
     .yen-label {
-      font-size: clamp(18px, 2vw, 22px);
+      font-size: 22px;
       font-weight: 900;
     }
 
@@ -459,39 +417,39 @@
       min-height: 56px;
       border-radius: 16px;
       color: white;
-      font-size: clamp(18px, 2vw, 24px);
+      font-size: 24px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
     }
 
-    .save-settings { background: var(--ok); }
+    .save-settings { background: var(--green); }
     .back-button { background: #4b5563; }
     .danger-outline {
-      color: var(--danger) !important;
-      background: #fff !important;
-      border: 2px solid var(--danger) !important;
+      color: var(--red) !important;
+      background: white !important;
+      border: 2px solid var(--red) !important;
       box-shadow: none !important;
     }
 
     @media (max-width: 980px) and (orientation: landscape) {
       .app { padding: 8px; gap: 8px; }
       .header { height: 48px; }
+      .title { font-size: 22px; }
+      .record-count { font-size: 20px; }
       .panel { padding: 10px; gap: 8px; }
-      .main-screen {
-        grid-template-columns: minmax(360px, 1.35fr) minmax(250px, 0.85fr) minmax(270px, 1fr);
-        gap: 8px;
-      }
-      .product-row {
-        grid-template-columns: minmax(0, 1fr) 44px 76px;
-        gap: 6px;
-      }
-      .summary-item { padding: 6px 8px; min-height: 32px; }
-      .amount-box { min-height: 40px; padding: 8px 10px; }
-      .amount-box.paid { min-height: 46px; }
-      .action-button { min-height: 40px; }
-      .record-button { min-height: 50px; }
-      .keypad-display { height: 66px; }
-      .restore-button { min-height: 50px; }
+      .main-screen { grid-template-columns: 1.35fr 0.85fr 1fr; gap: 8px; }
+      .product-row { grid-template-columns: minmax(0, 1fr) 44px 76px; gap: 6px; }
+      .product-name { font-size: 18px; }
+      .product-price { font-size: 18px; }
+      .summary-item { padding: 6px 8px; min-height: 32px; font-size: 15px; }
+      .amount-box { min-height: 40px; padding: 8px 10px; font-size: 17px; }
+      .amount-box.paid { min-height: 46px; font-size: 20px; }
+      .action-button { min-height: 40px; font-size: 16px; }
+      .record-button { min-height: 50px; font-size: 24px; }
+      .keypad-display { height: 66px; font-size: 40px; }
+      .key { font-size: 34px; }
+      .key.control { font-size: 24px; }
+      .restore-button { min-height: 50px; font-size: 22px; }
     }
 
     @media (orientation: portrait) {
@@ -506,7 +464,7 @@
         padding: 24px;
         text-align: center;
         background: #111827;
-        color: #fff;
+        color: white;
         font-size: 28px;
         font-weight: 900;
       }
@@ -520,38 +478,55 @@
       <div class="record-count" id="recordCount">記録件数：0件</div>
     </header>
 
-    <main id="mainScreen" class="screen active main-screen">
+    <main id="mainScreen" class="main-screen">
       <section class="panel">
         <div class="panel-title">商品</div>
-        <div class="products" id="productRows"></div>
+        <div class="products">
+          <div class="product-row">
+            <button class="product-main" onclick="addProduct(0)"><span class="product-name" id="pName0">ワッペン1</span><span class="product-price" id="pPrice0">250円</span></button>
+            <div class="times-block">×</div><div class="count-block" id="pCount0">0個</div>
+          </div>
+          <div class="product-row">
+            <button class="product-main" onclick="addProduct(1)"><span class="product-name" id="pName1">ワッペン2</span><span class="product-price" id="pPrice1">250円</span></button>
+            <div class="times-block">×</div><div class="count-block" id="pCount1">0個</div>
+          </div>
+          <div class="product-row">
+            <button class="product-main" onclick="addProduct(2)"><span class="product-name" id="pName2">たぬきチーフリング青</span><span class="product-price" id="pPrice2">700円</span></button>
+            <div class="times-block">×</div><div class="count-block" id="pCount2">0個</div>
+          </div>
+          <div class="product-row">
+            <button class="product-main" onclick="addProduct(3)"><span class="product-name" id="pName3">たぬきチーフリング赤</span><span class="product-price" id="pPrice3">700円</span></button>
+            <div class="times-block">×</div><div class="count-block" id="pCount3">0個</div>
+          </div>
+          <div class="product-row">
+            <button class="product-main" onclick="addProduct(4)"><span class="product-name" id="pName4">「弥栄」日本手拭い</span><span class="product-price" id="pPrice4">700円</span></button>
+            <div class="times-block">×</div><div class="count-block" id="pCount4">0個</div>
+          </div>
+        </div>
       </section>
 
       <section class="panel">
         <div class="panel-title">今回の会計</div>
-        <div class="summary-list" id="summaryList"></div>
-
+        <div class="summary-list">
+          <div class="summary-item"><span class="summary-name" id="sName0">ワッペン1</span><span class="summary-count" id="sCount0">0個</span></div>
+          <div class="summary-item"><span class="summary-name" id="sName1">ワッペン2</span><span class="summary-count" id="sCount1">0個</span></div>
+          <div class="summary-item"><span class="summary-name" id="sName2">たぬきチーフリング青</span><span class="summary-count" id="sCount2">0個</span></div>
+          <div class="summary-item"><span class="summary-name" id="sName3">たぬきチーフリング赤</span><span class="summary-count" id="sCount3">0個</span></div>
+          <div class="summary-item"><span class="summary-name" id="sName4">「弥栄」日本手拭い</span><span class="summary-count" id="sCount4">0個</span></div>
+        </div>
         <div class="amounts">
-          <div class="amount-box">
-            <span>定価合計</span>
-            <span id="regularTotal">0円</span>
-          </div>
-          <div class="amount-box paid">
-            <span>会計金額</span>
-            <span id="paidTotal">0円</span>
-          </div>
-          <div class="amount-box discount">
-            <span>差額</span>
-            <span id="discountTotal">0円</span>
-          </div>
+          <div class="amount-box"><span>定価合計</span><span id="regularTotal">0円</span></div>
+          <div class="amount-box paid"><span>会計金額</span><span id="paidTotal">0円</span></div>
+          <div class="amount-box discount"><span>差額</span><span id="discountTotal">0円</span></div>
           <div class="actions">
-            <button class="action-button record-button" id="recordButton">記録</button>
-            <button class="action-button reset-button" id="resetButton">リセット</button>
-            <button class="action-button cancel-button" id="cancelLastButton">直前取消</button>
-            <button class="action-button settings-button" id="openSettingsButton">商品・価格設定</button>
-            <button class="action-button csv-button" id="exportCsvButton">CSV出力</button>
-            <button class="action-button finish-button" id="finishAccountingButton">会計終了</button>
+            <button class="action-button record-button" onclick="recordSale()">記録</button>
+            <button class="action-button reset-button" onclick="resetCurrentSale()">リセット</button>
+            <button class="action-button cancel-button" onclick="cancelLastRecord()">直前取消</button>
+            <button class="action-button settings-button" onclick="openSettings()">商品・価格設定</button>
+            <button class="action-button csv-button" onclick="exportCsvOnly()">CSV出力</button>
+            <button class="action-button finish-button" onclick="finishAccounting()">会計終了</button>
           </div>
-          <div class="notice" id="notice"></div>
+          <div class="notice" id="notice">起動中...</div>
         </div>
       </section>
 
@@ -559,523 +534,401 @@
         <div class="keypad-display-label">合計金額入力</div>
         <div class="keypad-display" id="keypadDisplay">0円</div>
         <div class="keypad">
-          <button class="key" data-key="1">1</button>
-          <button class="key" data-key="2">2</button>
-          <button class="key" data-key="3">3</button>
-          <button class="key" data-key="4">4</button>
-          <button class="key" data-key="5">5</button>
-          <button class="key" data-key="6">6</button>
-          <button class="key" data-key="7">7</button>
-          <button class="key" data-key="8">8</button>
-          <button class="key" data-key="9">9</button>
-          <button class="key control" data-key="clear">C</button>
-          <button class="key" data-key="0">0</button>
-          <button class="key control" data-key="backspace">←</button>
+          <button class="key" onclick="handleKey('1')">1</button>
+          <button class="key" onclick="handleKey('2')">2</button>
+          <button class="key" onclick="handleKey('3')">3</button>
+          <button class="key" onclick="handleKey('4')">4</button>
+          <button class="key" onclick="handleKey('5')">5</button>
+          <button class="key" onclick="handleKey('6')">6</button>
+          <button class="key" onclick="handleKey('7')">7</button>
+          <button class="key" onclick="handleKey('8')">8</button>
+          <button class="key" onclick="handleKey('9')">9</button>
+          <button class="key control" onclick="handleKey('clear')">C</button>
+          <button class="key" onclick="handleKey('0')">0</button>
+          <button class="key control" onclick="handleKey('backspace')">←</button>
         </div>
-        <button class="restore-button" id="restoreRegularButton">定価に戻す</button>
+        <button class="restore-button" onclick="restoreRegularPrice()">定価に戻す</button>
       </section>
     </main>
 
-    <section id="settingsScreen" class="screen settings-screen">
-      <div class="settings-header">
-        <div>
-          <div class="settings-title">商品・価格設定</div>
-          <div class="settings-note">商品名と価格を変更できます。保存後、次の会計から反映されます。</div>
-        </div>
+    <section id="settingsScreen" class="settings-screen">
+      <div>
+        <div class="settings-title">商品・価格設定</div>
+        <div class="settings-note">商品名と価格を変更できます。保存後、次の会計から反映されます。</div>
       </div>
-      <div class="settings-list" id="settingsList"></div>
+      <div class="settings-list">
+        <div class="settings-row"><input id="setName0" type="text"><input class="settings-price-input" id="setPrice0" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+        <div class="settings-row"><input id="setName1" type="text"><input class="settings-price-input" id="setPrice1" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+        <div class="settings-row"><input id="setName2" type="text"><input class="settings-price-input" id="setPrice2" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+        <div class="settings-row"><input id="setName3" type="text"><input class="settings-price-input" id="setPrice3" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+        <div class="settings-row"><input id="setName4" type="text"><input class="settings-price-input" id="setPrice4" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+      </div>
       <div class="settings-actions">
-        <button class="danger-outline" id="clearAllButton">全データ削除</button>
-        <button class="back-button" id="backButton">戻る</button>
-        <button class="save-settings" id="saveSettingsButton">保存して戻る</button>
+        <button class="danger-outline" onclick="clearAllData()">全データ削除</button>
+        <button class="back-button" onclick="closeSettingsWithoutSaving()">戻る</button>
+        <button class="save-settings" onclick="saveSettingsAndReturn()">保存して戻る</button>
       </div>
     </section>
   </div>
 
   <script>
-    const DEFAULT_PRODUCTS = [
-      { id: "item1", name: "ワッペン1", price: 250 },
-      { id: "item2", name: "ワッペン2", price: 250 },
-      { id: "item3", name: "たぬきチーフリング青", price: 700 },
-      { id: "item4", name: "たぬきチーフリング赤", price: 700 },
-      { id: "item5", name: "「弥栄」日本手拭い", price: 700 }
-    ];
-
-    const STORAGE_KEYS = {
-      products: "shiga_rs_pos_products_v2",
-      records: "shiga_rs_pos_records_v2"
+    window.onerror = function(message, source, line) {
+      alert('JavaScriptエラー: ' + message + ' 行:' + line);
+      return false;
     };
 
-    let products = loadProducts();
-    let records = loadRecords();
-    let counts = Object.fromEntries(products.map(product => [product.id, 0]));
-    let paidInput = "";
-    let manualPaid = false;
+    var STORAGE_PRODUCTS = 'shiga_rs_products_static_v1';
+    var STORAGE_RECORDS = 'shiga_rs_records_static_v1';
 
-    const productRowsEl = document.getElementById("productRows");
-    const summaryListEl = document.getElementById("summaryList");
-    const regularTotalEl = document.getElementById("regularTotal");
-    const paidTotalEl = document.getElementById("paidTotal");
-    const discountTotalEl = document.getElementById("discountTotal");
-    const keypadDisplayEl = document.getElementById("keypadDisplay");
-    const recordCountEl = document.getElementById("recordCount");
-    const noticeEl = document.getElementById("notice");
-    const mainScreenEl = document.getElementById("mainScreen");
-    const settingsScreenEl = document.getElementById("settingsScreen");
-    const settingsListEl = document.getElementById("settingsList");
+    var products = [
+      { id: 'item1', name: 'ワッペン1', price: 250 },
+      { id: 'item2', name: 'ワッペン2', price: 250 },
+      { id: 'item3', name: 'たぬきチーフリング青', price: 700 },
+      { id: 'item4', name: 'たぬきチーフリング赤', price: 700 },
+      { id: 'item5', name: '「弥栄」日本手拭い', price: 700 }
+    ];
 
-    document.getElementById("recordButton").addEventListener("click", recordSale);
-    document.getElementById("resetButton").addEventListener("click", resetCurrentSale);
-    document.getElementById("cancelLastButton").addEventListener("click", cancelLastRecord);
-    document.getElementById("openSettingsButton").addEventListener("click", openSettings);
-    document.getElementById("exportCsvButton").addEventListener("click", exportCsvOnly);
-    document.getElementById("finishAccountingButton").addEventListener("click", finishAccounting);
-    document.getElementById("restoreRegularButton").addEventListener("click", restoreRegularPrice);
-    document.getElementById("backButton").addEventListener("click", closeSettingsWithoutSaving);
-    document.getElementById("saveSettingsButton").addEventListener("click", saveSettingsAndReturn);
-    document.getElementById("clearAllButton").addEventListener("click", clearAllData);
+    var counts = [0, 0, 0, 0, 0];
+    var records = [];
+    var paidInput = '';
+    var manualPaid = false;
+    var noticeTimer = null;
 
-    document.querySelectorAll(".key").forEach(button => {
-      button.addEventListener("click", () => handleKey(button.dataset.key));
-    });
+    initApp();
 
-    renderAll();
+    function initApp() {
+      loadProducts();
+      loadRecords();
+      updateScreen();
+      showNotice('起動しました。', 1200);
+    }
 
     function loadProducts() {
-      const saved = localStorage.getItem(STORAGE_KEYS.products);
-      if (!saved) return DEFAULT_PRODUCTS.map(product => ({ ...product }));
-
+      var saved = null;
+      try { saved = localStorage.getItem(STORAGE_PRODUCTS); } catch (e) {}
+      if (!saved) return;
       try {
-        const parsed = JSON.parse(saved);
-        return DEFAULT_PRODUCTS.map(defaultProduct => {
-          const savedProduct = parsed.find(product => product.id === defaultProduct.id);
-          return {
-            ...defaultProduct,
-            name: typeof savedProduct?.name === "string" && savedProduct.name.trim() ? savedProduct.name.trim() : defaultProduct.name,
-            price: Number.isFinite(Number(savedProduct?.price)) ? Number(savedProduct.price) : defaultProduct.price
-          };
-        });
-      } catch {
-        return DEFAULT_PRODUCTS.map(product => ({ ...product }));
-      }
+        var parsed = JSON.parse(saved);
+        for (var i = 0; i < products.length; i++) {
+          if (parsed[i] && parsed[i].name) products[i].name = String(parsed[i].name);
+          if (parsed[i] && !isNaN(Number(parsed[i].price))) products[i].price = Number(parsed[i].price);
+        }
+      } catch (e) {}
     }
 
     function loadRecords() {
-      const saved = localStorage.getItem(STORAGE_KEYS.records);
-      if (!saved) return [];
-
+      var saved = null;
+      try { saved = localStorage.getItem(STORAGE_RECORDS); } catch (e) {}
+      if (!saved) return;
       try {
-        const parsed = JSON.parse(saved);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
+        var parsed = JSON.parse(saved);
+        if (parsed && parsed.length) records = parsed;
+      } catch (e) {}
     }
 
     function saveProducts() {
-      localStorage.setItem(STORAGE_KEYS.products, JSON.stringify(products));
+      try { localStorage.setItem(STORAGE_PRODUCTS, JSON.stringify(products)); } catch (e) {}
     }
 
     function saveRecords() {
-      localStorage.setItem(STORAGE_KEYS.records, JSON.stringify(records));
+      try { localStorage.setItem(STORAGE_RECORDS, JSON.stringify(records)); } catch (e) {}
     }
 
-    function formatYen(value) {
-      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    function updateScreen() {
+      for (var i = 0; i < products.length; i++) {
+        text('pName' + i, products[i].name);
+        text('pPrice' + i, yen(products[i].price));
+        text('pCount' + i, counts[i] + '個');
+        text('sName' + i, products[i].name);
+        text('sCount' + i, counts[i] + '個');
+      }
+
+      var regular = getRegularTotal();
+      var paid = manualPaid ? Number(paidInput || 0) : regular;
+
+      text('regularTotal', yen(regular));
+      text('paidTotal', yen(paid));
+      text('discountTotal', yen(regular - paid));
+      text('keypadDisplay', yen(paid));
+      text('recordCount', '記録件数：' + records.length + '件');
+    }
+
+    function text(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function yen(value) {
+      return Number(value || 0).toLocaleString('ja-JP') + '円';
     }
 
     function getRegularTotal() {
-      return products.reduce((sum, product) => sum + product.price * counts[product.id], 0);
-    }
-
-    function getPaidTotal() {
-      if (!manualPaid) return getRegularTotal();
-      return Number(paidInput || 0);
-    }
-
-    function getDiscount() {
-      return getRegularTotal() - getPaidTotal();
+      var sum = 0;
+      for (var i = 0; i < products.length; i++) sum += products[i].price * counts[i];
+      return sum;
     }
 
     function getTotalCount() {
-      return products.reduce((sum, product) => sum + counts[product.id], 0);
+      var sum = 0;
+      for (var i = 0; i < counts.length; i++) sum += counts[i];
+      return sum;
     }
 
-    function renderAll() {
-      renderProducts();
-      renderSummary();
-      renderAmounts();
-      renderRecordCount();
-    }
-
-    function renderProducts() {
-      productRowsEl.innerHTML = "";
-
-      products.forEach(product => {
-        const row = document.createElement("div");
-        row.className = "product-row";
-
-        const mainButton = document.createElement("button");
-        mainButton.className = "product-main";
-        mainButton.innerHTML = `
-          <span class="product-name">${escapeHtml(product.name)}</span>
-          <span class="product-price">${formatYen(product.price)}</span>
-        `;
-        mainButton.addEventListener("click", () => addProduct(product.id));
-
-        const times = document.createElement("div");
-        times.className = "times-block";
-        times.textContent = "×";
-
-        const count = document.createElement("div");
-        count.className = "count-block";
-        count.textContent = `${counts[product.id]}個`;
-
-        row.appendChild(mainButton);
-        row.appendChild(times);
-        row.appendChild(count);
-        productRowsEl.appendChild(row);
-      });
-    }
-
-    function renderSummary() {
-      summaryListEl.innerHTML = "";
-
-      products.forEach(product => {
-        const item = document.createElement("div");
-        item.className = "summary-item";
-        item.innerHTML = `
-          <span class="summary-name">${escapeHtml(product.name)}</span>
-          <span class="summary-count">${counts[product.id]}個</span>
-        `;
-        summaryListEl.appendChild(item);
-      });
-    }
-
-    function renderAmounts() {
-      const regularTotal = getRegularTotal();
-      const paidTotal = getPaidTotal();
-      const discount = getDiscount();
-
-      regularTotalEl.textContent = formatYen(regularTotal);
-      paidTotalEl.textContent = formatYen(paidTotal);
-      discountTotalEl.textContent = formatYen(discount);
-      keypadDisplayEl.textContent = formatYen(paidTotal);
-    }
-
-    function renderRecordCount() {
-      recordCountEl.textContent = `記録件数：${records.length}件`;
-    }
-
-    function addProduct(productId) {
-      counts[productId] += 1;
-      showNotice("");
-      renderAll();
+    function addProduct(index) {
+      counts[index] += 1;
+      showNotice('');
+      updateScreen();
     }
 
     function handleKey(key) {
       manualPaid = true;
-
-      if (key === "clear") {
-        paidInput = "";
-      } else if (key === "backspace") {
+      if (key === 'clear') {
+        paidInput = '';
+      } else if (key === 'backspace') {
         paidInput = paidInput.slice(0, -1);
-      } else {
-        if (paidInput.length < 7) {
-          paidInput += key;
-          paidInput = String(Number(paidInput || 0));
-        }
+      } else if (paidInput.length < 7) {
+        paidInput = String(Number(paidInput + key));
       }
-
-      renderAmounts();
+      updateScreen();
     }
 
     function restoreRegularPrice() {
       manualPaid = false;
-      paidInput = "";
-      renderAmounts();
-      showNotice("会計金額を定価合計に戻しました。", 1200);
+      paidInput = '';
+      updateScreen();
+      showNotice('会計金額を定価合計に戻しました。', 1200);
     }
 
     function resetCurrentSale() {
-      counts = Object.fromEntries(products.map(product => [product.id, 0]));
+      counts = [0, 0, 0, 0, 0];
       manualPaid = false;
-      paidInput = "";
-      showNotice("今回の会計をリセットしました。", 1200);
-      renderAll();
+      paidInput = '';
+      updateScreen();
+      showNotice('今回の会計をリセットしました。', 1200);
     }
 
     function recordSale() {
       if (getTotalCount() === 0) {
-        showNotice("商品が選択されていません。", 1600);
+        showNotice('商品が選択されていません。', 1600);
         return;
       }
 
-      const regularTotal = getRegularTotal();
-      const paidTotal = getPaidTotal();
-      const items = products.map(product => ({
-        id: product.id,
-        name: product.name,
-        count: counts[product.id],
-        price: product.price
-      }));
+      var regular = getRegularTotal();
+      var paid = manualPaid ? Number(paidInput || 0) : regular;
+      var items = [];
 
-      const record = {
+      for (var i = 0; i < products.length; i++) {
+        items.push({
+          id: products[i].id,
+          name: products[i].name,
+          count: counts[i],
+          price: products[i].price
+        });
+      }
+
+      records.push({
         datetime: formatDatetime(new Date()),
-        items,
-        regularTotal,
-        paidTotal,
-        discount: regularTotal - paidTotal
-      };
+        items: items,
+        regularTotal: regular,
+        paidTotal: paid,
+        discount: regular - paid
+      });
 
-      records.push(record);
       saveRecords();
       resetCurrentSale();
-      showNotice("記録しました。", 1400);
-      renderRecordCount();
+      updateScreen();
+      showNotice('記録しました。', 1400);
     }
 
     function cancelLastRecord() {
       if (records.length === 0) {
-        showNotice("取り消す記録がありません。", 1600);
+        showNotice('取り消す記録がありません。', 1600);
         return;
       }
-
-      const lastRecord = records[records.length - 1];
-      const message = buildCancelMessage(lastRecord);
-      const confirmed = confirm(message);
-
-      if (!confirmed) {
-        showNotice("取消を中止しました。", 1200);
-        return;
-      }
-
+      var msg = buildCancelMessage(records[records.length - 1]);
+      if (!confirm(msg)) return;
       records.pop();
       saveRecords();
-      renderRecordCount();
-      showNotice("直前の記録を取り消しました。", 1600);
+      updateScreen();
+      showNotice('直前の記録を取り消しました。', 1600);
     }
 
     function buildCancelMessage(record) {
-      const lines = ["以下の記録を取り消しますか？", ""];
-      record.items.forEach(item => {
-        if (item.count > 0) {
-          lines.push(`${item.name}：${item.count}個 × ${item.price}円`);
-        }
-      });
-      lines.push("");
-      lines.push(`定価合計：${record.regularTotal}円`);
-      lines.push(`会計金額：${record.paidTotal}円`);
-      lines.push(`差額：${record.discount}円`);
-      lines.push("");
-      lines.push("取り消す場合はOK、やめる場合はキャンセルを押してください。");
-      return lines.join("
-");
+      var lines = ['以下の記録を取り消しますか？', ''];
+      for (var i = 0; i < record.items.length; i++) {
+        var item = record.items[i];
+        if (item.count > 0) lines.push(item.name + '：' + item.count + '個 × ' + item.price + '円');
+      }
+      lines.push('', '定価合計：' + record.regularTotal + '円', '会計金額：' + record.paidTotal + '円', '差額：' + record.discount + '円', '', '取り消す場合はOK、やめる場合はキャンセルを押してください。');
+      return lines.join('\n');
     }
 
     function openSettings() {
-      renderSettings();
-      mainScreenEl.classList.remove("active");
-      settingsScreenEl.classList.add("active");
+      for (var i = 0; i < products.length; i++) {
+        document.getElementById('setName' + i).value = products[i].name;
+        document.getElementById('setPrice' + i).value = products[i].price;
+      }
+      document.getElementById('mainScreen').style.display = 'none';
+      document.getElementById('settingsScreen').style.display = 'flex';
     }
 
     function closeSettingsWithoutSaving() {
-      settingsScreenEl.classList.remove("active");
-      mainScreenEl.classList.add("active");
-      showNotice("設定を保存せずに戻りました。", 1400);
-    }
-
-    function renderSettings() {
-      settingsListEl.innerHTML = "";
-
-      products.forEach(product => {
-        const row = document.createElement("div");
-        row.className = "settings-row";
-        row.innerHTML = `
-          <input class="settings-name-input" type="text" value="${escapeHtml(product.name)}" data-name-id="${product.id}" />
-          <input class="settings-price-input" type="number" min="0" step="1" inputmode="numeric" value="${product.price}" data-price-id="${product.id}" />
-          <div class="yen-label">円</div>
-        `;
-        settingsListEl.appendChild(row);
-      });
+      document.getElementById('settingsScreen').style.display = 'none';
+      document.getElementById('mainScreen').style.display = 'grid';
+      showNotice('設定を保存せずに戻りました。', 1200);
     }
 
     function saveSettingsAndReturn() {
-      const nameInputs = settingsListEl.querySelectorAll("input[data-name-id]");
-      const priceInputs = settingsListEl.querySelectorAll("input[data-price-id]");
-      const newNames = {};
-      const newPrices = {};
-
-      for (const input of nameInputs) {
-        const name = input.value.trim();
+      for (var i = 0; i < products.length; i++) {
+        var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, '');
+        var price = Number(document.getElementById('setPrice' + i).value);
         if (!name) {
-          alert("商品名は空欄にできません。");
+          alert('商品名は空欄にできません。');
           return;
         }
-        newNames[input.dataset.nameId] = name;
-      }
-
-      for (const input of priceInputs) {
-        const value = Number(input.value);
-        if (!Number.isFinite(value) || value < 0) {
-          alert("価格は0円以上の数字で入力してください。");
+        if (isNaN(price) || price < 0) {
+          alert('価格は0円以上の数字で入力してください。');
           return;
         }
-        newPrices[input.dataset.priceId] = Math.round(value);
+        products[i].name = name;
+        products[i].price = Math.round(price);
       }
-
-      products = products.map(product => ({
-        ...product,
-        name: newNames[product.id],
-        price: newPrices[product.id]
-      }));
-
-      counts = Object.fromEntries(products.map(product => [product.id, counts[product.id] || 0]));
       saveProducts();
-      manualPaid = false;
-      paidInput = "";
-
-      settingsScreenEl.classList.remove("active");
-      mainScreenEl.classList.add("active");
-      renderAll();
-      showNotice("商品名と価格を保存しました。", 1400);
+      closeSettingsWithoutSaving();
+      updateScreen();
+      showNotice('商品名と価格を保存しました。', 1400);
     }
 
     function exportCsvOnly() {
-      const ok = exportCsv("滋賀RS会計_通常出力");
-      if (ok) showNotice("CSVを出力しました。記録は残っています。", 1800);
+      if (exportCsv('滋賀RS会計_通常出力')) {
+        showNotice('CSVを出力しました。記録は残っています。', 1800);
+      }
     }
 
     function finishAccounting() {
       if (records.length === 0) {
-        showNotice("終了する記録がありません。", 1600);
+        showNotice('終了する記録がありません。', 1600);
         return;
       }
-
-      const confirmed = confirm("現在の記録をCSV出力し、記録件数を0件に戻します。よろしいですか？");
-      if (!confirmed) return;
-
-      const ok = exportCsv("滋賀RS会計_会計終了");
-      if (!ok) return;
-
+      if (!confirm('現在の記録をCSV出力し、記録件数を0件に戻します。よろしいですか？')) return;
+      if (!exportCsv('滋賀RS会計_会計終了')) return;
       records = [];
       saveRecords();
       resetCurrentSale();
-      renderRecordCount();
-      showNotice("会計を終了しました。記録件数を0件に戻しました。", 2200);
+      updateScreen();
+      showNotice('会計を終了しました。記録件数を0件に戻しました。', 2200);
     }
 
     function exportCsv(prefix) {
       if (records.length === 0) {
-        showNotice("出力する記録がありません。", 1600);
+        showNotice('出力する記録がありません。', 1600);
         return false;
       }
 
-      const productIds = DEFAULT_PRODUCTS.map(product => product.id);
-      const latestNamesById = Object.fromEntries(products.map(product => [product.id, product.name]));
+      var headers = ['日時'];
+      for (var i = 0; i < products.length; i++) {
+        headers.push(products[i].name + '_商品名');
+        headers.push(products[i].name + '_個数');
+        headers.push(products[i].name + '_単価');
+      }
+      headers.push('定価合計');
+      headers.push('会計金額');
+      headers.push('差額');
 
-      const headers = ["日時"];
-      productIds.forEach(productId => {
-        const label = latestNamesById[productId] || productId;
-        headers.push(`${label}_商品名`, `${label}_個数`, `${label}_単価`);
-      });
-      headers.push("定価合計", "会計金額", "差額");
+      var lines = [csvLine(headers)];
 
-      const rows = records.map(record => {
-        const row = [record.datetime];
-        productIds.forEach(productId => {
-          const item = record.items.find(recordItem => recordItem.id === productId);
-          row.push(item?.name ?? "", item?.count ?? 0, item?.price ?? 0);
-        });
-        row.push(record.regularTotal, record.paidTotal, record.discount);
-        return row;
-      });
+      for (var r = 0; r < records.length; r++) {
+        var row = [records[r].datetime];
+        for (var p = 0; p < products.length; p++) {
+          var item = findRecordItem(records[r].items, products[p].id);
+          row.push(item ? item.name : '');
+          row.push(item ? item.count : 0);
+          row.push(item ? item.price : 0);
+        }
+        row.push(records[r].regularTotal);
+        row.push(records[r].paidTotal);
+        row.push(records[r].discount);
+        lines.push(csvLine(row));
+      }
 
-      const csv = [headers, ...rows]
-        .map(row => row.map(value => csvEscape(value)).join(","))
-        .join("
-");
-
-      const bom = "﻿";
-      const blob = new Blob([bom + csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      const now = new Date();
-      const stamp = buildFileStamp(now);
-
+      var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
       link.href = url;
-      link.download = `${prefix}_${stamp}.csv`;
+      link.download = prefix + '_' + buildFileStamp(new Date()) + '.csv';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-
       return true;
     }
 
-    function clearAllData() {
-      const confirmed = confirm("保存済みの売上記録と商品・価格設定をすべて削除します。よろしいですか？");
-      if (!confirmed) return;
-
-      localStorage.removeItem(STORAGE_KEYS.products);
-      localStorage.removeItem(STORAGE_KEYS.records);
-      products = DEFAULT_PRODUCTS.map(product => ({ ...product }));
-      records = [];
-      counts = Object.fromEntries(products.map(product => [product.id, 0]));
-      manualPaid = false;
-      paidInput = "";
-      saveProducts();
-      saveRecords();
-
-      settingsScreenEl.classList.remove("active");
-      mainScreenEl.classList.add("active");
-      renderAll();
-      showNotice("全データを削除しました。", 1800);
+    function findRecordItem(items, id) {
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id === id) return items[i];
+      }
+      return null;
     }
 
-    function formatDatetime(date) {
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, "0");
-      const dd = String(date.getDate()).padStart(2, "0");
-      const hh = String(date.getHours()).padStart(2, "0");
-      const mi = String(date.getMinutes()).padStart(2, "0");
-      const ss = String(date.getSeconds()).padStart(2, "0");
-      return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
-    }
-
-    function buildFileStamp(date) {
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, "0");
-      const dd = String(date.getDate()).padStart(2, "0");
-      const hh = String(date.getHours()).padStart(2, "0");
-      const mi = String(date.getMinutes()).padStart(2, "0");
-      return `${yyyy}${mm}${dd}_${hh}${mi}`;
+    function csvLine(row) {
+      var arr = [];
+      for (var i = 0; i < row.length; i++) arr.push(csvEscape(row[i]));
+      return arr.join(',');
     }
 
     function csvEscape(value) {
-      const text = String(value ?? "");
-      if (text.includes(",") || text.includes("\"") || text.includes("
-")) {
-        return `"${text.replaceAll("\"", "\"\"")}"`;
+      var text = String(value == null ? '' : value);
+      if (text.indexOf(',') >= 0 || text.indexOf('"') >= 0 || text.indexOf('\n') >= 0 || text.indexOf('\r') >= 0) {
+        return '"' + text.replace(/"/g, '""') + '"';
       }
       return text;
     }
 
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll("\"", "&quot;")
-        .replaceAll("'", "&#039;");
+    function clearAllData() {
+      if (!confirm('保存済みの売上記録と商品・価格設定をすべて削除します。よろしいですか？')) return;
+      try {
+        localStorage.removeItem(STORAGE_PRODUCTS);
+        localStorage.removeItem(STORAGE_RECORDS);
+      } catch (e) {}
+      products = [
+        { id: 'item1', name: 'ワッペン1', price: 250 },
+        { id: 'item2', name: 'ワッペン2', price: 250 },
+        { id: 'item3', name: 'たぬきチーフリング青', price: 700 },
+        { id: 'item4', name: 'たぬきチーフリング赤', price: 700 },
+        { id: 'item5', name: '「弥栄」日本手拭い', price: 700 }
+      ];
+      records = [];
+      counts = [0, 0, 0, 0, 0];
+      manualPaid = false;
+      paidInput = '';
+      saveProducts();
+      saveRecords();
+      document.getElementById('settingsScreen').style.display = 'none';
+      document.getElementById('mainScreen').style.display = 'grid';
+      updateScreen();
+      showNotice('全データを削除しました。', 1800);
     }
 
-    function showNotice(message, duration = 0) {
-      noticeEl.textContent = message;
-      if (duration > 0) {
-        setTimeout(() => {
-          if (noticeEl.textContent === message) noticeEl.textContent = "";
-        }, duration);
+    function formatDatetime(date) {
+      return date.getFullYear() + '/' + pad2(date.getMonth() + 1) + '/' + pad2(date.getDate()) + ' ' + pad2(date.getHours()) + ':' + pad2(date.getMinutes()) + ':' + pad2(date.getSeconds());
+    }
+
+    function buildFileStamp(date) {
+      return String(date.getFullYear()) + pad2(date.getMonth() + 1) + pad2(date.getDate()) + '_' + pad2(date.getHours()) + pad2(date.getMinutes());
+    }
+
+    function pad2(value) {
+      value = String(value);
+      return value.length < 2 ? '0' + value : value;
+    }
+
+    function showNotice(message, duration) {
+      var el = document.getElementById('notice');
+      if (!el) return;
+      el.textContent = message;
+      if (noticeTimer) clearTimeout(noticeTimer);
+      if (duration) {
+        noticeTimer = setTimeout(function() { el.textContent = ''; }, duration);
       }
     }
   </script>
