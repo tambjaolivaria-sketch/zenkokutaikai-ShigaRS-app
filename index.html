@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>バザー会計アプリ</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --danger-dark: #b91c1c;
+      --ok: #16a34a;
+      --ok-dark: #15803d;
+      --warning: #f59e0b;
+      --shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+      gap: 12px;
+    }
+
+    .header {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 0 22px;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .record-count {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .main-screen {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr 0.8fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .products {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 58px 96px;
+      gap: 8px;
+      height: 76px;
+    }
+
+    .product-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 18px;
+      border-radius: 16px;
+      background: #eef4ff;
+      color: #123c7c;
+      border: 2px solid #c7d9ff;
+      font-weight: 800;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.14);
+    }
+
+    .product-main:active {
+      transform: scale(0.99);
+      background: #dbeafe;
+    }
+
+    .product-name {
+      font-size: 22px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-price {
+      font-size: 20px;
+      white-space: nowrap;
+    }
+
+    .times-block, .count-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 2px solid var(--line);
+      font-weight: 800;
+    }
+
+    .times-block {
+      font-size: 26px;
+      color: var(--muted);
+    }
+
+    .count-block {
+      font-size: 22px;
+    }
+
+    .summary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 0 2px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .amounts {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .amount-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      border-radius: 14px;
+      background: #f3f4f6;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .amount-box.paid {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 2px solid #a7f3d0;
+      font-size: 24px;
+    }
+
+    .amount-box.discount {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .action-button {
+      min-height: 60px;
+      border-radius: 16px;
+      font-size: 19px;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+    }
+
+    .record-button {
+      background: var(--ok);
+      grid-column: span 2;
+      min-height: 70px;
+      font-size: 24px;
+    }
+
+    .record-button:active { background: var(--ok-dark); }
+    .reset-button { background: var(--danger); }
+    .reset-button:active { background: var(--danger-dark); }
+    .settings-button { background: #4b5563; }
+    .csv-button { background: var(--primary); }
+    .csv-button:active { background: var(--primary-dark); }
+
+    .keypad-panel {
+      gap: 10px;
+    }
+
+    .keypad-display-label {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .keypad-display {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 18px;
+      border-radius: 16px;
+      background: #111827;
+      color: white;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      flex: 1;
+    }
+
+    .key {
+      min-height: 76px;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 2px solid var(--line);
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    .key:active {
+      transform: scale(0.98);
+      background: #e5e7eb;
+    }
+
+    .key.control {
+      font-size: 23px;
+      background: #fef3c7;
+      border-color: #fcd34d;
+    }
+
+    .restore-button {
+      min-height: 62px;
+      border-radius: 16px;
+      background: var(--primary);
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .settings-screen {
+      flex: 1;
+      min-height: 0;
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .settings-title {
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .settings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 760px;
+    }
+
+    .settings-row {
+      display: grid;
+      grid-template-columns: 1fr 220px 60px;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .settings-product-name {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .settings-row input {
+      height: 58px;
+      border-radius: 14px;
+      border: 2px solid var(--line);
+      padding: 0 14px;
+      font-size: 24px;
+      font-weight: 800;
+      text-align: right;
+      background: white;
+      user-select: text;
+    }
+
+    .yen-label {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .settings-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .settings-actions button {
+      min-width: 180px;
+      min-height: 62px;
+      border-radius: 16px;
+      color: white;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
+    }
+
+    .save-settings { background: var(--ok); }
+    .back-button { background: #4b5563; }
+    .danger-outline {
+      color: var(--danger) !important;
+      background: #fff !important;
+      border: 2px solid var(--danger) !important;
+      box-shadow: none !important;
+    }
+
+    .notice {
+      min-height: 28px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    @media (orientation: portrait) {
+      body::before {
+        content: "iPadを横向きにして使用してください";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        background: #111827;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 900;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="title">バザー会計アプリ</div>
+      <div class="record-count" id="recordCount">記録件数：0件</div>
+    </header>
+
+    <main id="mainScreen" class="screen active main-screen">
+      <section class="panel">
+        <div class="panel-title">商品</div>
+        <div class="products" id="productRows"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">今回の会計</div>
+        <div class="summary-list" id="summaryList"></div>
+
+        <div class="amounts">
+          <div class="amount-box">
+            <span>定価合計</span>
+            <span id="regularTotal">0円</span>
+          </div>
+          <div class="amount-box paid">
+            <span>会計金額</span>
+            <span id="paidTotal">0円</span>
+          </div>
+          <div class="amount-box discount">
+            <span>差額</span>
+            <span id="discountTotal">0円</span>
+          </div>
+          <div class="actions">
+            <button class="action-button record-button" id="recordButton">記録</button>
+            <button class="action-button reset-button" id="resetButton">リセット</button>
+            <button class="action-button settings-button" id="openSettingsButton">価格設定</button>
+            <button class="action-button csv-button" id="exportCsvButton">CSV出力</button>
+          </div>
+          <div class="notice" id="notice"></div>
+        </div>
+      </section>
+
+      <section class="panel keypad-panel">
+        <div class="keypad-display-label">合計金額入力</div>
+        <div class="keypad-display" id="keypadDisplay">0円</div>
+        <div class="keypad">
+          <button class="key" data-key="1">1</button>
+          <button class="key" data-key="2">2</button>
+          <button class="key" data-key="3">3</button>
+          <button class="key" data-key="4">4</button>
+          <button class="key" data-key="5">5</button>
+          <button class="key" data-key="6">6</button>
+          <button class="key" data-key="7">7</button>
+          <button class="key" data-key="8">8</button>
+          <button class="key" data-key="9">9</button>
+          <button class="key control" data-key="clear">C</button>
+          <button class="key" data-key="0">0</button>
+          <button class="key control" data-key="backspace">←</button>
+        </div>
+        <button class="restore-button" id="restoreRegularButton">定価に戻す</button>
+      </section>
+    </main>
+
+    <section id="settingsScreen" class="screen settings-screen">
+      <div class="settings-header">
+        <div>
+          <div class="settings-title">価格設定</div>
+          <div class="notice">商品名は固定です。価格だけ変更できます。</div>
+        </div>
+      </div>
+      <div class="settings-list" id="settingsList"></div>
+      <div class="settings-actions">
+        <button class="danger-outline" id="clearAllButton">全データ削除</button>
+        <button class="back-button" id="backButton">戻る</button>
+        <button class="save-settings" id="saveSettingsButton">保存して戻る</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const DEFAULT_PRODUCTS = [
+      { id: "wappen1", name: "ワッペン1", price: 250 },
+      { id: "wappen2", name: "ワッペン2", price: 250 },
+      { id: "tanukiBlue", name: "たぬきチーフリング青", price: 700 },
+      { id: "tanukiRed", name: "たぬきチーフリング赤", price: 700 },
+      { id: "iyasakaTenugui", name: "「弥栄」日本手拭い", price: 700 }
+    ];
+
+    const STORAGE_KEYS = {
+      products: "bazaar_pos_products_v1",
+      records: "bazaar_pos_records_v1"
+    };
+
+    let products = loadProducts();
+    let records = loadRecords();
+    let counts = Object.fromEntries(products.map(product => [product.id, 0]));
+    let paidInput = "";
+    let manualPaid = false;
+
+    const productRowsEl = document.getElementById("productRows");
+    const summaryListEl = document.getElementById("summaryList");
+    const regularTotalEl = document.getElementById("regularTotal");
+    const paidTotalEl = document.getElementById("paidTotal");
+    const discountTotalEl = document.getElementById("discountTotal");
+    const keypadDisplayEl = document.getElementById("keypadDisplay");
+    const recordCountEl = document.getElementById("recordCount");
+    const noticeEl = document.getElementById("notice");
+    const mainScreenEl = document.getElementById("mainScreen");
+    const settingsScreenEl = document.getElementById("settingsScreen");
+    const settingsListEl = document.getElementById("settingsList");
+
+    document.getElementById("recordButton").addEventListener("click", recordSale);
+    document.getElementById("resetButton").addEventListener("click", resetCurrentSale);
+    document.getElementById("openSettingsButton").addEventListener("click", openSettings);
+    document.getElementById("exportCsvButton").addEventListener("click", exportCsv);
+    document.getElementById("restoreRegularButton").addEventListener("click", restoreRegularPrice);
+    document.getElementById("backButton").addEventListener("click", closeSettingsWithoutSaving);
+    document.getElementById("saveSettingsButton").addEventListener("click", saveSettingsAndReturn);
+    document.getElementById("clearAllButton").addEventListener("click", clearAllData);
+
+    document.querySelectorAll(".key").forEach(button => {
+      button.addEventListener("click", () => handleKey(button.dataset.key));
+    });
+
+    renderAll();
+
+    function loadProducts() {
+      const saved = localStorage.getItem(STORAGE_KEYS.products);
+      if (!saved) return DEFAULT_PRODUCTS.map(product => ({ ...product }));
+
+      try {
+        const parsed = JSON.parse(saved);
+        return DEFAULT_PRODUCTS.map(defaultProduct => {
+          const savedProduct = parsed.find(product => product.id === defaultProduct.id);
+          return {
+            ...defaultProduct,
+            price: Number.isFinite(Number(savedProduct?.price)) ? Number(savedProduct.price) : defaultProduct.price
+          };
+        });
+      } catch {
+        return DEFAULT_PRODUCTS.map(product => ({ ...product }));
+      }
+    }
+
+    function loadRecords() {
+      const saved = localStorage.getItem(STORAGE_KEYS.records);
+      if (!saved) return [];
+
+      try {
+        const parsed = JSON.parse(saved);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveProducts() {
+      localStorage.setItem(STORAGE_KEYS.products, JSON.stringify(products));
+    }
+
+    function saveRecords() {
+      localStorage.setItem(STORAGE_KEYS.records, JSON.stringify(records));
+    }
+
+    function formatYen(value) {
+      return `${Number(value || 0).toLocaleString("ja-JP")}円`;
+    }
+
+    function getRegularTotal() {
+      return products.reduce((sum, product) => sum + product.price * counts[product.id], 0);
+    }
+
+    function getPaidTotal() {
+      if (!manualPaid) return getRegularTotal();
+      return Number(paidInput || 0);
+    }
+
+    function getDiscount() {
+      return getRegularTotal() - getPaidTotal();
+    }
+
+    function getTotalCount() {
+      return products.reduce((sum, product) => sum + counts[product.id], 0);
+    }
+
+    function renderAll() {
+      renderProducts();
+      renderSummary();
+      renderAmounts();
+      renderRecordCount();
+    }
+
+    function renderProducts() {
+      productRowsEl.innerHTML = "";
+
+      products.forEach(product => {
+        const row = document.createElement("div");
+        row.className = "product-row";
+
+        const mainButton = document.createElement("button");
+        mainButton.className = "product-main";
+        mainButton.innerHTML = `
+          <span class="product-name">${escapeHtml(product.name)}</span>
+          <span class="product-price">${formatYen(product.price)}</span>
+        `;
+        mainButton.addEventListener("click", () => addProduct(product.id));
+
+        const times = document.createElement("div");
+        times.className = "times-block";
+        times.textContent = "×";
+
+        const count = document.createElement("div");
+        count.className = "count-block";
+        count.textContent = `${counts[product.id]}個`;
+
+        row.appendChild(mainButton);
+        row.appendChild(times);
+        row.appendChild(count);
+        productRowsEl.appendChild(row);
+      });
+    }
+
+    function renderSummary() {
+      summaryListEl.innerHTML = "";
+
+      products.forEach(product => {
+        const item = document.createElement("div");
+        item.className = "summary-item";
+        item.innerHTML = `
+          <span>${escapeHtml(product.name)}</span>
+          <span>${counts[product.id]}個</span>
+        `;
+        summaryListEl.appendChild(item);
+      });
+    }
+
+    function renderAmounts() {
+      const regularTotal = getRegularTotal();
+      const paidTotal = getPaidTotal();
+      const discount = getDiscount();
+
+      regularTotalEl.textContent = formatYen(regularTotal);
+      paidTotalEl.textContent = formatYen(paidTotal);
+      discountTotalEl.textContent = formatYen(discount);
+      keypadDisplayEl.textContent = formatYen(paidTotal);
+    }
+
+    function renderRecordCount() {
+      recordCountEl.textContent = `記録件数：${records.length}件`;
+    }
+
+    function addProduct(productId) {
+      counts[productId] += 1;
+      showNotice("");
+      renderAll();
+    }
+
+    function handleKey(key) {
+      manualPaid = true;
+
+      if (key === "clear") {
+        paidInput = "";
+      } else if (key === "backspace") {
+        paidInput = paidInput.slice(0, -1);
+      } else {
+        if (paidInput.length < 7) {
+          paidInput += key;
+          paidInput = String(Number(paidInput || 0));
+        }
+      }
+
+      renderAmounts();
+    }
+
+    function restoreRegularPrice() {
+      manualPaid = false;
+      paidInput = "";
+      renderAmounts();
+      showNotice("会計金額を定価合計に戻しました。", 1200);
+    }
+
+    function resetCurrentSale() {
+      counts = Object.fromEntries(products.map(product => [product.id, 0]));
+      manualPaid = false;
+      paidInput = "";
+      showNotice("今回の会計をリセットしました。", 1200);
+      renderAll();
+    }
+
+    function recordSale() {
+      if (getTotalCount() === 0) {
+        showNotice("商品が選択されていません。", 1600);
+        return;
+      }
+
+      const regularTotal = getRegularTotal();
+      const paidTotal = getPaidTotal();
+      const items = products.map(product => ({
+        id: product.id,
+        name: product.name,
+        count: counts[product.id],
+        price: product.price
+      }));
+
+      const record = {
+        datetime: new Date().toLocaleString("ja-JP", { hour12: false }),
+        items,
+        regularTotal,
+        paidTotal,
+        discount: regularTotal - paidTotal
+      };
+
+      records.push(record);
+      saveRecords();
+      resetCurrentSale();
+      showNotice("記録しました。", 1400);
+      renderRecordCount();
+    }
+
+    function openSettings() {
+      renderSettings();
+      mainScreenEl.classList.remove("active");
+      settingsScreenEl.classList.add("active");
+    }
+
+    function closeSettingsWithoutSaving() {
+      settingsScreenEl.classList.remove("active");
+      mainScreenEl.classList.add("active");
+      showNotice("価格設定を保存せずに戻りました。", 1400);
+    }
+
+    function renderSettings() {
+      settingsListEl.innerHTML = "";
+
+      products.forEach(product => {
+        const row = document.createElement("div");
+        row.className = "settings-row";
+        row.innerHTML = `
+          <div class="settings-product-name">${escapeHtml(product.name)}</div>
+          <input type="number" min="0" step="1" inputmode="numeric" value="${product.price}" data-product-id="${product.id}" />
+          <div class="yen-label">円</div>
+        `;
+        settingsListEl.appendChild(row);
+      });
+    }
+
+    function saveSettingsAndReturn() {
+      const inputs = settingsListEl.querySelectorAll("input[data-product-id]");
+      const newPrices = {};
+
+      for (const input of inputs) {
+        const value = Number(input.value);
+        if (!Number.isFinite(value) || value < 0) {
+          alert("価格は0円以上の数字で入力してください。");
+          return;
+        }
+        newPrices[input.dataset.productId] = Math.round(value);
+      }
+
+      products = products.map(product => ({
+        ...product,
+        price: newPrices[product.id]
+      }));
+
+      counts = Object.fromEntries(products.map(product => [product.id, counts[product.id] || 0]));
+      saveProducts();
+      manualPaid = false;
+      paidInput = "";
+
+      settingsScreenEl.classList.remove("active");
+      mainScreenEl.classList.add("active");
+      renderAll();
+      showNotice("価格を保存しました。", 1400);
+    }
+
+    function exportCsv() {
+      if (records.length === 0) {
+        showNotice("出力する記録がありません。", 1600);
+        return;
+      }
+
+      const headers = ["日時"];
+      products.forEach(product => {
+        headers.push(`${product.name}_個数`, `${product.name}_単価`);
+      });
+      headers.push("定価合計", "会計金額", "差額");
+
+      const rows = records.map(record => {
+        const row = [record.datetime];
+        products.forEach(product => {
+          const item = record.items.find(recordItem => recordItem.id === product.id);
+          row.push(item?.count ?? 0, item?.price ?? 0);
+        });
+        row.push(record.regularTotal, record.paidTotal, record.discount);
+        return row;
+      });
+
+      const csv = [headers, ...rows]
+        .map(row => row.map(value => csvEscape(value)).join(","))
+        .join("\n");
+
+      const bom = "\uFEFF";
+      const blob = new Blob([bom + csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mi = String(now.getMinutes()).padStart(2, "0");
+
+      link.href = url;
+      link.download = `bazaar_sales_${yyyy}${mm}${dd}_${hh}${mi}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showNotice("CSVを出力しました。", 1600);
+    }
+
+    function clearAllData() {
+      const confirmed = confirm("保存済みの売上記録と価格設定をすべて削除します。よろしいですか？");
+      if (!confirmed) return;
+
+      localStorage.removeItem(STORAGE_KEYS.products);
+      localStorage.removeItem(STORAGE_KEYS.records);
+      products = DEFAULT_PRODUCTS.map(product => ({ ...product }));
+      records = [];
+      counts = Object.fromEntries(products.map(product => [product.id, 0]));
+      manualPaid = false;
+      paidInput = "";
+      saveProducts();
+
+      settingsScreenEl.classList.remove("active");
+      mainScreenEl.classList.add("active");
+      renderAll();
+      showNotice("全データを削除しました。", 1800);
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      if (text.includes(",") || text.includes("\"") || text.includes("\n")) {
+        return `"${text.replaceAll("\"", "\"\"")}"`;
+      }
+      return text;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("\"", "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function showNotice(message, duration = 0) {
+      noticeEl.textContent = message;
+      if (duration > 0) {
+        setTimeout(() => {
+          if (noticeEl.textContent === message) noticeEl.textContent = "";
+        }, duration);
+      }
+    }
+  </script>
+</body>
+</html>
