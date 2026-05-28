@@ -647,38 +647,82 @@
       position: relative;
     }
 
-    .icon.wappen {
+    .product-icon-trail {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      flex-shrink: 1;
+    }
+
+    .summary-icon-trail {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      flex-shrink: 1;
+    }
+
+    .product-icon-trail .icon,
+    .summary-icon-trail .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .icon.wappen-blue, .icon.wappen-red {
       border-radius: 50%;
-      border: 4px solid #1d4ed8;
-      background: radial-gradient(circle at 50% 50%, #ffffff 0 38%, #bfdbfe 40% 58%, #3b82f6 60% 100%);
       box-shadow: inset 0 0 0 2px #ffffff;
     }
 
-    .icon.pottery-blue::before, .icon.pottery-red::before {
-      content: "";
-      position: absolute;
-      left: 5px;
-      right: 5px;
-      bottom: 3px;
-      height: 20px;
-      border-radius: 6px 6px 12px 12px;
-      border: 3px solid currentColor;
-      background: color-mix(in srgb, currentColor 18%, white);
+    .icon.wappen-blue {
+      border: 4px solid #1d4ed8;
+      background: radial-gradient(circle at 50% 50%, #ffffff 0 38%, #bfdbfe 40% 58%, #3b82f6 60% 100%);
     }
 
-    .icon.pottery-blue::after, .icon.pottery-red::after {
+    .icon.wappen-red {
+      border: 4px solid #b91c1c;
+      background: radial-gradient(circle at 50% 50%, #ffffff 0 38%, #fecaca 40% 58%, #ef4444 60% 100%);
+    }
+
+    .icon.tanuki-blue, .icon.tanuki-red {
+      border-radius: 45% 45% 48% 48%;
+      border: 2px solid #713f12;
+      background:
+        radial-gradient(circle at 10px 12px, #111827 0 2px, transparent 3px),
+        radial-gradient(circle at 20px 12px, #111827 0 2px, transparent 3px),
+        radial-gradient(ellipse at 15px 22px, #fde68a 0 7px, transparent 8px),
+        #a16207;
+    }
+
+    .icon.tanuki-blue::before, .icon.tanuki-red::before {
+      content: "";
+      position: absolute;
+      left: 1px;
+      right: 1px;
+      top: -2px;
+      height: 8px;
+      border-radius: 50%;
+      background: #78350f;
+      border: 2px solid #451a03;
+    }
+
+    .icon.tanuki-blue::after, .icon.tanuki-red::after {
       content: "";
       position: absolute;
       left: 9px;
-      right: 9px;
-      top: 3px;
-      height: 8px;
-      border-radius: 7px 7px 3px 3px;
-      background: currentColor;
+      bottom: 3px;
+      width: 12px;
+      height: 6px;
+      border-radius: 6px;
+      border: 2px solid white;
     }
 
-    .icon.pottery-blue { color: #2563eb; }
-    .icon.pottery-red { color: #dc2626; }
+    .icon.tanuki-blue::after { background: #2563eb; }
+    .icon.tanuki-red::after { background: #dc2626; }
 
     .icon.towel {
       border-radius: 5px;
@@ -785,16 +829,16 @@
     var STORAGE_RECORDS = 'shiga_rs_records_icon_cancel_v1';
     var MAX_PRODUCTS = 10;
     var products = [
-      { id: 'item1', name: 'ワッペン1', price: 250, active: true, icon: 'wappen' },
-      { id: 'item2', name: 'ワッペン2', price: 250, active: true, icon: 'wappen' },
-      { id: 'item3', name: '信楽焼青', price: 700, active: true, icon: 'pottery-blue' },
-      { id: 'item4', name: '信楽焼赤', price: 700, active: true, icon: 'pottery-red' },
+      { id: 'item1', name: 'ワッペン1', price: 250, active: true, icon: 'wappen-blue'blue' },
+      { id: 'item2', name: 'ワッペン2', price: 250, active: true, icon: 'wappen-blue'red' },
+      { id: 'item3', name: '信楽焼青', price: 700, active: true, icon: 'tanuki-blue' },
+      { id: 'item4', name: '信楽焼赤', price: 700, active: true, icon: 'tanuki-red' },
       { id: 'item5', name: '手拭い', price: 700, active: true, icon: 'towel' },
-      { id: 'item6', name: '新商品6', price: 0, active: false, icon: 'wappen' },
-      { id: 'item7', name: '新商品7', price: 0, active: false, icon: 'wappen' },
-      { id: 'item8', name: '新商品8', price: 0, active: false, icon: 'wappen' },
-      { id: 'item9', name: '新商品9', price: 0, active: false, icon: 'wappen' },
-      { id: 'item10', name: '新商品10', price: 0, active: false, icon: 'wappen' }
+      { id: 'item6', name: '新商品6', price: 0, active: false, icon: 'wappen-blue' },
+      { id: 'item7', name: '新商品7', price: 0, active: false, icon: 'wappen-blue' },
+      { id: 'item8', name: '新商品8', price: 0, active: false, icon: 'wappen-blue' },
+      { id: 'item9', name: '新商品9', price: 0, active: false, icon: 'wappen-blue' },
+      { id: 'item10', name: '新商品10', price: 0, active: false, icon: 'wappen-blue' }
     ];
     var settingProducts = [];
     var counts = [0,0,0,0,0,0,0,0,0,0];
@@ -819,8 +863,9 @@
     function updateScreen() { renderProducts(); renderSummary(); updateAmounts(); text('recordCount', '記録件数：' + activeRecordCount() + '件'); }
     function activeRecordCount() { var n = 0; for (var i = 0; i < records.length; i++) if (!records[i].cancelled) n++; return n; }
 
-    function renderProducts() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) html += '<div class="product-row"><button class="product-main" onclick="addProduct(' + i + ')"><span class="product-left">' + iconHTML(products[i].icon) + '<span class="product-name">' + esc(products[i].name) + '</span></span><span class="product-price">' + yen(products[i].price) + '</span></button><div class="times-block">×</div><div class="count-block">' + counts[i] + '</div></div>'; document.getElementById('productContainer').innerHTML = html; }
-    function renderSummary() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) { var cls = counts[i] > 0 ? 'summary-item selected' : 'summary-item'; html += '<div class="' + cls + '"><span class="summary-left">' + iconHTML(products[i].icon) + '<span class="summary-name">' + esc(products[i].name) + '</span></span><span class="summary-count">' + counts[i] + '</span></div>'; } document.getElementById('summaryContainer').innerHTML = html; }
+    function renderProducts() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) html += '<div class="product-row"><button class="product-main" onclick="addProduct(' + i + ')"><span class="product-left">' + iconHTML(products[i].icon) + '<span class="product-name">' + esc(products[i].name) + '</span>' + repeatedIconsHTML(products[i].icon, counts[i], 'product-icon-trail') + '</span><span class="product-price">' + yen(products[i].price) + '</span></button><div class="times-block">×</div><div class="count-block">' + counts[i] + '</div></div>'; document.getElementById('productContainer').innerHTML = html; }
+    function renderSummary() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) { var cls = counts[i] > 0 ? 'summary-item selected' : 'summary-item'; html += '<div class="' + cls + '"><span class="summary-left">' + iconHTML(products[i].icon) + '<span class="summary-name">' + esc(products[i].name) + '</span>' + repeatedIconsHTML(products[i].icon, counts[i], 'summary-icon-trail') + '</span><span class="summary-count">' + counts[i] + '</span></div>'; } document.getElementById('summaryContainer').innerHTML = html; }
+    function repeatedIconsHTML(icon, count, cls) { if (!count || count <= 0) return ''; var html = '<span class="' + cls + '">'; var limit = count > 12 ? 12 : count; for (var i = 0; i < limit; i++) html += iconHTML(icon); if (count > 12) html += '<span>+' + (count - 12) + '</span>'; return html + '</span>'; }
     function updateAmounts() { var regular = getRegularTotal(); var paid = manualPaid ? Number(paidInput || 0) : regular; var discount = regular - paid; text('regularTotal', yen(regular)); text('paidTotal', yen(paid)); text('discountTotal', yen(discount)); text('keypadDisplay', yen(paid)); text('saleStatus', manualPaid ? '受取金額入力中' : '定価販売'); var status = document.getElementById('saleStatus'); if (status) status.className = manualPaid ? 'sale-status changed' : 'sale-status'; var box = document.getElementById('discountBox'); if (box) box.className = discount === 0 ? 'amount-box discount zero' : 'amount-box discount'; }
     function text(id, value) { var el = document.getElementById(id); if (el) el.textContent = value; }
     function esc(text) { return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
