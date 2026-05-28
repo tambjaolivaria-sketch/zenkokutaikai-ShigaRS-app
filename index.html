@@ -440,6 +440,67 @@
       border-color: #fcd34d;
     }
 
+    .custom-dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .custom-dialog-backdrop.show {
+      display: flex;
+    }
+
+    .custom-dialog {
+      width: min(620px, 86vw);
+      max-height: 78vh;
+      overflow: hidden;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.32);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .custom-dialog-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #111827;
+    }
+
+    .custom-dialog-body {
+      white-space: pre-wrap;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.45;
+      color: #334155;
+      overflow: auto;
+      user-select: text;
+    }
+
+    .custom-dialog-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .custom-dialog-actions button {
+      min-height: 58px;
+      border-radius: 16px;
+      color: white;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .dialog-no-button { background: #64748b; }
+    .dialog-yes-button { background: var(--red); }
+
     .toast {
       position: fixed;
       top: 58px;
@@ -843,6 +904,16 @@
 
     <div class="bottom-spacer" aria-hidden="true"></div>
   </div>
+  <div class="custom-dialog-backdrop" id="cancelDialog">
+    <div class="custom-dialog">
+      <div class="custom-dialog-title">最後の記録を取り消しますか？</div>
+      <div class="custom-dialog-body" id="cancelDialogBody"></div>
+      <div class="custom-dialog-actions">
+        <button class="dialog-no-button" onclick="closeCancelDialog()">いいえ</button>
+        <button class="dialog-yes-button" onclick="confirmCancelLastRecord()">はい、取り消す</button>
+      </div>
+    </div>
+  </div>
   <div class="toast" id="recordToast">記録しました</div>
 
   <script>
@@ -914,7 +985,34 @@
 
     function recordSale() { if (getTotalCount() === 0) { showNotice('商品が選択されていません。', 1600); return; } var regular = getRegularTotal(); var paid = manualPaid ? Number(paidInput || 0) : regular; var items = []; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) items.push({ id: products[i].id, name: products[i].name, count: counts[i], price: products[i].price, icon: products[i].icon }); records.push({ datetime: formatDatetime(new Date()), items: items, regularTotal: regular, paidTotal: paid, discount: regular - paid, cancelled: false }); saveRecords(); showRecordAction(); hideKeypad(); resetCurrentSale(); updateScreen(); }
     function showRecordAction() { var btn = document.getElementById('recordButton'); var toast = document.getElementById('recordToast'); btn.className = btn.className.replace(' flash', '') + ' flash'; setTimeout(function(){ btn.className = btn.className.replace(' flash', ''); }, 600); toast.className = 'toast show'; if (toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.className = 'toast'; }, 720); }
-    function cancelLastRecord() { var index = -1; for (var i = records.length - 1; i >= 0; i--) { if (!records[i].cancelled) { index = i; break; } } if (index < 0) { showNotice('取り消す記録がありません。', 1600); return; } if (!confirm(buildCancelMessage(records[index]))) return; records[index].cancelled = true; saveRecords(); updateScreen(); showNotice('最後の記録を取消ONにしました。', 1600); }
+    var pendingCancelIndex = -1;
+    function cancelLastRecord() {
+      pendingCancelIndex = findLastActiveRecordIndex();
+      if (pendingCancelIndex < 0) {
+        showNotice('取り消す記録がありません。', 1600);
+        return;
+      }
+      document.getElementById('cancelDialogBody').textContent = buildCancelMessage(records[pendingCancelIndex]);
+      document.getElementById('cancelDialog').className = 'custom-dialog-backdrop show';
+    }
+    function findLastActiveRecordIndex() {
+      for (var i = records.length - 1; i >= 0; i--) {
+        if (!records[i].cancelled) return i;
+      }
+      return -1;
+    }
+    function closeCancelDialog() {
+      pendingCancelIndex = -1;
+      document.getElementById('cancelDialog').className = 'custom-dialog-backdrop';
+    }
+    function confirmCancelLastRecord() {
+      if (pendingCancelIndex < 0) return;
+      records[pendingCancelIndex].cancelled = true;
+      saveRecords();
+      closeCancelDialog();
+      updateScreen();
+      showNotice('最後の記録を取消ONにしました。', 1600);
+    }
     function buildCancelMessage(record) { var lines = ['以下の記録を取消ONにしますか？', '']; for (var i = 0; i < record.items.length; i++) if (record.items[i].count > 0) lines.push(record.items[i].name + '：' + record.items[i].count + ' × ' + record.items[i].price + '円'); lines.push('', '定価合計：' + record.regularTotal + '円', '受取金額：' + record.paidTotal + '円', '値引額：' + record.discount + '円', '', '取消ONの記録はCSV出力から除外されます。'); return lines.join('\n'); }
 
     function showOnly(id) { document.getElementById('mainScreen').style.display = id === 'mainScreen' ? 'grid' : 'none'; document.getElementById('settingsScreen').style.display = id === 'settingsScreen' ? 'flex' : 'none'; document.getElementById('recordsScreen').style.display = id === 'recordsScreen' ? 'flex' : 'none'; document.getElementById('editScreen').style.display = id === 'editScreen' ? 'flex' : 'none'; }
