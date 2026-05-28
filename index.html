@@ -116,7 +116,7 @@
       flex: 1;
       min-height: 32px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 40px 66px;
+      grid-template-columns: minmax(0, 1fr) 24px 66px;
       gap: 4px;
     }
 
@@ -157,14 +157,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 2px solid var(--line);
       font-weight: 900;
     }
 
-    .times-block { font-size: 20px; color: var(--muted); }
-    .count-block { font-size: 18px; }
+    .times-block {
+      font-size: 22px;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+    }
+
+    .count-block {
+      font-size: 18px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 2px solid var(--line);
+    }
 
     .summary-list {
       display: flex;
@@ -186,6 +194,13 @@
       gap: 8px;
       font-size: 12px;
       font-weight: 800;
+    }
+
+    .summary-item.selected {
+      background: #eff6ff;
+      border: 2px solid #bfdbfe;
+      color: #1e3a8a;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
     }
 
     .summary-name {
@@ -227,6 +242,29 @@
 
     .amount-box.discount { background: #fff7ed; color: #9a3412; }
 
+    .amount-box.discount.zero {
+      background: #f8fafc;
+      color: #64748b;
+    }
+
+    .sale-status {
+      min-height: 28px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 900;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .sale-status.changed {
+      background: #fff7ed;
+      color: #9a3412;
+      border: 2px solid #fed7aa;
+    }
+
     .record-only-area {
       margin-top: auto;
       display: flex;
@@ -263,8 +301,35 @@
     .right-actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .right-actions .action-button {
+      min-height: 70px;
+      font-size: 22px;
+      border-radius: 14px;
+    }
+
+    .utility-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 4px;
       flex-shrink: 0;
+    }
+
+    .utility-actions .action-button {
+      min-height: 28px;
+      font-size: 12px;
+      opacity: 0.92;
+    }
+
+    .record-helper {
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: -2px;
     }
 
     .right-actions .wide { grid-column: span 2; }
@@ -285,14 +350,14 @@
     }
 
     .keypad-display-label {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 900;
       color: var(--muted);
       flex-shrink: 0;
     }
 
     .keypad-display {
-      height: 48px;
+      height: 42px;
       border-radius: 12px;
       background: var(--dark);
       color: white;
@@ -549,15 +614,23 @@
       </section>
 
       <section class="panel">
+        <div class="utility-actions">
+          <button class="action-button history-button" onclick="openRecords()">記録一覧・編集</button>
+          <button class="action-button settings-button" onclick="openSettings()">商品・価格設定</button>
+          <button class="action-button csv-button" onclick="exportCsvOnly()">CSV出力</button>
+          <button class="action-button finish-button" onclick="finishAccounting()">会計終了</button>
+        </div>
         <div class="panel-title">今回の会計</div>
         <div class="summary-list" id="summaryContainer"></div>
         <div class="amounts">
+          <div class="sale-status" id="saleStatus">定価販売</div>
           <div class="amount-box"><span>定価合計</span><span id="regularTotal">0円</span></div>
           <div class="amount-box paid"><span>会計金額</span><span id="paidTotal">0円</span></div>
-          <div class="amount-box discount"><span>差額</span><span id="discountTotal">0円</span></div>
+          <div class="amount-box discount zero" id="discountBox"><span>値引額</span><span id="discountTotal">0円</span></div>
         </div>
         <div class="record-only-area">
           <button class="action-button record-button" id="recordButton" onclick="recordSale()">記録</button>
+          <div class="record-helper">記録後、自動でリセットします</div>
           <div class="notice" id="notice">起動中...</div>
         </div>
       </section>
@@ -566,14 +639,9 @@
         <div class="right-actions">
           <button class="action-button reset-button" onclick="resetCurrentSale()">リセット</button>
           <button class="action-button cancel-button" onclick="cancelLastRecord()">直前取消</button>
-          <button class="action-button history-button" onclick="openRecords()">記録一覧・編集</button>
-          <button class="action-button settings-button" onclick="openSettings()">商品・価格設定</button>
-          <button class="action-button csv-button" onclick="exportCsvOnly()">CSV出力</button>
-          <button class="action-button finish-button" onclick="finishAccounting()">会計終了</button>
-          
         </div>
 
-        <div class="keypad-display-label">合計金額入力</div>
+        <div class="keypad-display-label" id="keypadLabel">合計金額入力</div>
         <div class="keypad-display" id="keypadDisplay">0円</div>
         <div class="keypad-area">
           <div class="keypad-lock" id="keypadLock" onclick="toggleKeypad()">電卓を表示</div>
@@ -653,8 +721,8 @@
     function updateScreen() { renderProducts(); renderSummary(); updateAmounts(); text('recordCount', '記録件数：' + records.length + '件'); }
 
     function renderProducts() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) html += '<div class="product-row"><button class="product-main" onclick="addProduct(' + i + ')"><span class="product-name">' + esc(products[i].name) + '</span><span class="product-price">' + yen(products[i].price) + '</span></button><div class="times-block">×</div><div class="count-block">' + counts[i] + '個</div></div>'; document.getElementById('productContainer').innerHTML = html; }
-    function renderSummary() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) html += '<div class="summary-item"><span class="summary-name">' + esc(products[i].name) + '</span><span class="summary-count">' + counts[i] + '個</span></div>'; document.getElementById('summaryContainer').innerHTML = html; }
-    function updateAmounts() { var regular = getRegularTotal(); var paid = manualPaid ? Number(paidInput || 0) : regular; text('regularTotal', yen(regular)); text('paidTotal', yen(paid)); text('discountTotal', yen(regular - paid)); text('keypadDisplay', yen(paid)); }
+    function renderSummary() { var html = ''; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) { var cls = counts[i] > 0 ? 'summary-item selected' : 'summary-item'; html += '<div class="' + cls + '"><span class="summary-name">' + esc(products[i].name) + '</span><span class="summary-count">' + counts[i] + '個</span></div>'; } document.getElementById('summaryContainer').innerHTML = html; }
+    function updateAmounts() { var regular = getRegularTotal(); var paid = manualPaid ? Number(paidInput || 0) : regular; var discount = regular - paid; text('regularTotal', yen(regular)); text('paidTotal', yen(paid)); text('discountTotal', yen(discount)); text('keypadDisplay', yen(paid)); text('saleStatus', manualPaid ? '合計金額入力中' : '定価販売'); var status = document.getElementById('saleStatus'); if (status) status.className = manualPaid ? 'sale-status changed' : 'sale-status'; var box = document.getElementById('discountBox'); if (box) box.className = discount === 0 ? 'amount-box discount zero' : 'amount-box discount'; }
     function text(id, value) { var el = document.getElementById(id); if (el) el.textContent = value; }
     function esc(text) { return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     function yen(value) { return Number(value || 0).toLocaleString('ja-JP') + '円'; }
@@ -664,8 +732,8 @@
     function addProduct(index) { if (!products[index].active) return; counts[index] += 1; showNotice(''); updateScreen(); }
     function handleKey(key) { if (!keypadVisible) return; manualPaid = true; if (key === 'clear') paidInput = ''; else if (key === 'backspace') paidInput = paidInput.slice(0, -1); else if (key === '00') { if (paidInput.length < 6) paidInput = String(Number((paidInput || '0') + '00')); } else if (paidInput.length < 7) paidInput = String(Number(paidInput + key)); updateAmounts(); }
     function restoreRegularPrice() { manualPaid = false; paidInput = ''; updateAmounts(); showNotice('会計金額を定価合計に戻しました。', 1200); }
-    function toggleKeypad() { keypadVisible = !keypadVisible; document.getElementById('keypad').className = keypadVisible ? 'keypad unlocked' : 'keypad'; document.getElementById('keypadLock').className = keypadVisible ? 'keypad-lock hidden' : 'keypad-lock'; }
-    function hideKeypad() { keypadVisible = false; document.getElementById('keypad').className = 'keypad'; document.getElementById('keypadLock').className = 'keypad-lock'; }
+    function toggleKeypad() { keypadVisible = !keypadVisible; document.getElementById('keypad').className = keypadVisible ? 'keypad unlocked' : 'keypad'; document.getElementById('keypadLock').className = keypadVisible ? 'keypad-lock hidden' : 'keypad-lock'; text('keypadLabel', keypadVisible ? '合計金額入力中' : '合計金額入力'); }
+    function hideKeypad() { keypadVisible = false; document.getElementById('keypad').className = 'keypad'; document.getElementById('keypadLock').className = 'keypad-lock'; text('keypadLabel', '合計金額入力'); }
     function resetCurrentSale() { counts = [0,0,0,0,0,0,0,0,0,0]; manualPaid = false; paidInput = ''; updateScreen(); showNotice('今回の会計をリセットしました。', 1200); }
 
     function recordSale() { if (getTotalCount() === 0) { showNotice('商品が選択されていません。', 1600); return; } var regular = getRegularTotal(); var paid = manualPaid ? Number(paidInput || 0) : regular; var items = []; for (var i = 0; i < MAX_PRODUCTS; i++) if (products[i].active) items.push({ id: products[i].id, name: products[i].name, count: counts[i], price: products[i].price }); records.push({ datetime: formatDatetime(new Date()), items: items, regularTotal: regular, paidTotal: paid, discount: regular - paid }); saveRecords(); showRecordAction(); hideKeypad(); resetCurrentSale(); updateScreen(); }
