@@ -31,8 +31,7 @@
       margin: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -43,16 +42,15 @@
 
     .app {
       width: 100vw;
-      min-height: 100vh;
-      height: auto;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 6px;
-      gap: 6px;
+      padding: 4px;
+      gap: 4px;
     }
 
     .header {
-      height: 42px;
+      height: 38px;
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -80,22 +78,22 @@
     }
 
     .main-screen {
-      height: calc(100vh - 60px);
+      flex: 1;
       min-height: 0;
       display: grid;
       grid-template-columns: 1.45fr 0.85fr 1fr;
-      gap: 6px;
+      gap: 4px;
     }
 
     .panel {
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 8px;
+      padding: 6px;
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       overflow: hidden;
     }
 
@@ -115,7 +113,7 @@
 
     .product-row {
       flex: 1;
-      min-height: 38px;
+      min-height: 32px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) 44px 72px;
       gap: 6px;
@@ -244,7 +242,7 @@
 
     .record-button {
       grid-column: span 2;
-      min-height: 78px;
+      min-height: 68px;
       background: var(--green);
       font-size: 26px;
       border: 3px solid #bbf7d0;
@@ -281,7 +279,7 @@
     }
 
     .keypad-display {
-      height: 58px;
+      height: 50px;
       border-radius: 16px;
       background: var(--dark);
       color: white;
@@ -304,7 +302,7 @@
     }
 
     .key {
-      min-height: 42px;
+      min-height: 34px;
       border-radius: 14px;
       background: white;
       border: 2px solid var(--line);
@@ -321,7 +319,7 @@
     }
 
     .restore-button {
-      min-height: 42px;
+      min-height: 34px;
       border-radius: 14px;
       background: var(--blue);
       color: white;
@@ -355,7 +353,7 @@
     }
 
     .bottom-spacer {
-      height: 78px;
+      height: 68px;
       flex-shrink: 0;
       background: transparent;
     }
