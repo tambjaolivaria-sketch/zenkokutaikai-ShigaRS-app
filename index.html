@@ -18,7 +18,7 @@
       --orange: #f59e0b;
       --dark: #111827;
       --shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
-      --radius: 18px;
+      --radius: 16px;
     }
 
     * {
@@ -37,26 +37,20 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      border: none;
-      cursor: pointer;
-    }
+    button, input { font: inherit; }
+    button { border: none; cursor: pointer; }
 
     .app {
       width: 100vw;
       height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 10px;
-      gap: 10px;
+      padding: 8px;
+      gap: 8px;
     }
 
     .header {
-      height: 54px;
+      height: 48px;
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -69,7 +63,7 @@
     }
 
     .title {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
       white-space: nowrap;
       overflow: hidden;
@@ -78,7 +72,7 @@
 
     .record-count {
       color: var(--blue);
-      font-size: 24px;
+      font-size: 23px;
       font-weight: 900;
       white-space: nowrap;
     }
@@ -88,23 +82,23 @@
       min-height: 0;
       display: grid;
       grid-template-columns: 1.45fr 0.85fr 1fr;
-      gap: 10px;
+      gap: 8px;
     }
 
     .panel {
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 12px;
+      padding: 10px;
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       overflow: hidden;
     }
 
     .panel-title {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 900;
       flex-shrink: 0;
     }
@@ -114,15 +108,15 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .product-row {
       flex: 1;
-      min-height: 56px;
+      min-height: 44px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 52px 86px;
-      gap: 8px;
+      grid-template-columns: minmax(0, 1fr) 48px 80px;
+      gap: 7px;
     }
 
     .product-main {
@@ -131,8 +125,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 0 16px;
-      border-radius: 16px;
+      padding: 0 14px;
+      border-radius: 14px;
       background: #eef4ff;
       color: #123c7c;
       border: 2px solid #c7d9ff;
@@ -140,12 +134,12 @@
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.14);
     }
 
-    .product-main:active, .key:active, .action-button:active, .restore-button:active {
+    .product-main:active, .key:active, .action-button:active, .restore-button:active, .settings-actions button:active, .small-button:active {
       transform: scale(0.98);
     }
 
     .product-name {
-      font-size: 24px;
+      font-size: 22px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -153,7 +147,7 @@
     }
 
     .product-price {
-      font-size: 22px;
+      font-size: 20px;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -162,39 +156,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 16px;
+      border-radius: 14px;
       background: #f9fafb;
       border: 2px solid var(--line);
       font-weight: 900;
     }
 
-    .times-block {
-      font-size: 28px;
-      color: var(--muted);
-    }
-
-    .count-block {
-      font-size: 24px;
-    }
+    .times-block { font-size: 26px; color: var(--muted); }
+    .count-block { font-size: 22px; }
 
     .summary-list {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
       min-height: 0;
     }
 
     .summary-item {
-      min-height: 36px;
-      padding: 8px 10px;
-      border-radius: 12px;
+      min-height: 31px;
+      padding: 6px 9px;
+      border-radius: 11px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
     }
 
@@ -205,99 +193,101 @@
       min-width: 0;
     }
 
-    .summary-count {
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
+    .summary-count { white-space: nowrap; flex-shrink: 0; }
 
     .amounts {
       margin-top: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
 
     .amount-box {
-      min-height: 46px;
-      border-radius: 14px;
+      min-height: 38px;
+      border-radius: 12px;
       background: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      font-size: 20px;
+      padding: 7px 10px;
+      font-size: 18px;
       font-weight: 900;
     }
 
     .amount-box.paid {
-      min-height: 52px;
+      min-height: 44px;
       background: #ecfdf5;
       border: 2px solid #a7f3d0;
       color: #065f46;
-      font-size: 24px;
+      font-size: 22px;
     }
 
-    .amount-box.discount {
-      background: #fff7ed;
-      color: #9a3412;
-    }
+    .amount-box.discount { background: #fff7ed; color: #9a3412; }
 
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 7px;
     }
 
     .action-button {
-      min-height: 46px;
-      border-radius: 14px;
+      min-height: 36px;
+      border-radius: 12px;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
     }
 
     .record-button {
       grid-column: span 2;
-      min-height: 58px;
+      min-height: 92px;
       background: var(--green);
-      font-size: 28px;
+      font-size: 34px;
+      border: 4px solid #bbf7d0;
+    }
+
+    .record-button.flash {
+      animation: recordFlash 0.55s ease;
+    }
+
+    @keyframes recordFlash {
+      0% { transform: scale(1); filter: brightness(1); }
+      35% { transform: scale(0.98); filter: brightness(1.25); }
+      100% { transform: scale(1); filter: brightness(1); }
     }
 
     .reset-button { background: var(--red); }
     .cancel-button { background: var(--brown); }
     .settings-button { background: #4b5563; }
     .csv-button { background: var(--blue); }
-    .finish-button {
-      grid-column: span 2;
-      background: var(--orange);
-    }
+    .finish-button { grid-column: span 2; background: var(--orange); }
 
     .notice {
-      min-height: 22px;
-      font-size: 16px;
+      min-height: 20px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--blue);
     }
 
     .keypad-display-label {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
       color: var(--muted);
       flex-shrink: 0;
     }
 
     .keypad-display {
-      height: 76px;
-      border-radius: 18px;
+      height: 70px;
+      border-radius: 16px;
       background: var(--dark);
       color: white;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       padding: 0 18px;
-      font-size: 52px;
+      font-size: 48px;
       font-weight: 900;
       letter-spacing: 0.03em;
       flex-shrink: 0;
@@ -308,35 +298,58 @@
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 9px;
     }
 
     .key {
-      min-height: 58px;
-      border-radius: 18px;
+      min-height: 50px;
+      border-radius: 16px;
       background: white;
       border: 2px solid var(--line);
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 900;
       color: var(--text);
       box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
     }
 
     .key.control {
-      font-size: 30px;
+      font-size: 28px;
       background: #fef3c7;
       border-color: #fcd34d;
     }
 
     .restore-button {
-      min-height: 56px;
-      border-radius: 18px;
+      min-height: 50px;
+      border-radius: 16px;
       background: var(--blue);
       color: white;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
       flex-shrink: 0;
+    }
+
+    .toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-12px);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: #16a34a;
+      color: white;
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-size: 30px;
+      font-weight: 900;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.28);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     .settings-screen {
@@ -346,62 +359,72 @@
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 20px;
+      padding: 18px;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       overflow: hidden;
     }
 
-    .settings-title {
-      font-size: 34px;
-      font-weight: 900;
-    }
-
-    .settings-note {
-      margin-top: 4px;
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--muted);
-    }
+    .settings-title { font-size: 32px; font-weight: 900; }
+    .settings-note { margin-top: 4px; font-size: 17px; font-weight: 800; color: var(--muted); }
 
     .settings-list {
       flex: 1;
       min-height: 0;
-      max-width: 980px;
+      max-width: 1100px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 7px;
+      overflow: auto;
+      padding-right: 4px;
+      user-select: text;
     }
 
     .settings-row {
-      min-height: 64px;
+      min-height: 50px;
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) 190px 48px;
+      grid-template-columns: minmax(260px, 1fr) 160px 40px 96px;
       align-items: center;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 16px;
+      gap: 8px;
+      padding: 7px;
+      border-radius: 14px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
     }
 
+    .settings-row.inactive { display: none; }
+
     .settings-row input {
-      height: 48px;
-      border-radius: 14px;
+      height: 40px;
+      border-radius: 12px;
       border: 2px solid var(--line);
-      padding: 0 12px;
-      font-size: 24px;
+      padding: 0 10px;
+      font-size: 20px;
       font-weight: 800;
       background: white;
       user-select: text;
     }
 
-    .settings-price-input {
-      text-align: right;
+    .settings-price-input { text-align: right; }
+    .yen-label { font-size: 20px; font-weight: 900; }
+
+    .small-button {
+      min-height: 40px;
+      border-radius: 12px;
+      color: white;
+      font-size: 18px;
+      font-weight: 900;
+      background: var(--red);
     }
 
-    .yen-label {
-      font-size: 22px;
+    .add-product-button {
+      align-self: flex-start;
+      min-width: 180px;
+      min-height: 44px;
+      border-radius: 14px;
+      background: var(--blue);
+      color: white;
+      font-size: 20px;
       font-weight: 900;
     }
 
@@ -413,61 +436,35 @@
     }
 
     .settings-actions button {
-      min-width: 160px;
-      min-height: 56px;
-      border-radius: 16px;
+      min-width: 150px;
+      min-height: 50px;
+      border-radius: 15px;
       color: white;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
     }
 
     .save-settings { background: var(--green); }
     .back-button { background: #4b5563; }
-    .danger-outline {
-      color: var(--red) !important;
-      background: white !important;
-      border: 2px solid var(--red) !important;
-      box-shadow: none !important;
-    }
+    .danger-outline { color: var(--red) !important; background: white !important; border: 2px solid var(--red) !important; box-shadow: none !important; }
 
     @media (max-width: 980px) and (orientation: landscape) {
-      .app { padding: 8px; gap: 8px; }
-      .header { height: 48px; }
       .title { font-size: 22px; }
       .record-count { font-size: 20px; }
-      .panel { padding: 10px; gap: 8px; }
-      .main-screen { grid-template-columns: 1.35fr 0.85fr 1fr; gap: 8px; }
-      .product-row { grid-template-columns: minmax(0, 1fr) 44px 76px; gap: 6px; }
+      .main-screen { grid-template-columns: 1.35fr 0.85fr 1fr; }
+      .product-row { grid-template-columns: minmax(0, 1fr) 44px 74px; gap: 6px; }
       .product-name { font-size: 18px; }
       .product-price { font-size: 18px; }
-      .summary-item { padding: 6px 8px; min-height: 32px; font-size: 15px; }
-      .amount-box { min-height: 40px; padding: 8px 10px; font-size: 17px; }
-      .amount-box.paid { min-height: 46px; font-size: 20px; }
-      .action-button { min-height: 40px; font-size: 16px; }
-      .record-button { min-height: 50px; font-size: 24px; }
-      .keypad-display { height: 66px; font-size: 40px; }
-      .key { font-size: 34px; }
-      .key.control { font-size: 24px; }
-      .restore-button { min-height: 50px; font-size: 22px; }
-    }
-
-    @media (orientation: portrait) {
-      body::before {
-        content: "iPadを横向きにして使用してください";
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        text-align: center;
-        background: #111827;
-        color: white;
-        font-size: 28px;
-        font-weight: 900;
-      }
+      .summary-item { min-height: 28px; font-size: 14px; padding: 5px 8px; }
+      .amount-box { min-height: 34px; font-size: 16px; padding: 6px 9px; }
+      .amount-box.paid { min-height: 40px; font-size: 19px; }
+      .record-button { min-height: 78px; font-size: 28px; }
+      .action-button { min-height: 32px; font-size: 14px; }
+      .keypad-display { height: 62px; font-size: 38px; }
+      .key { font-size: 32px; }
+      .key.control { font-size: 23px; }
+      .restore-button { min-height: 46px; font-size: 21px; }
     }
   </style>
 </head>
@@ -482,44 +479,39 @@
       <section class="panel">
         <div class="panel-title">商品</div>
         <div class="products">
-          <div class="product-row">
-            <button class="product-main" onclick="addProduct(0)"><span class="product-name" id="pName0">ワッペン1</span><span class="product-price" id="pPrice0">250円</span></button>
-            <div class="times-block">×</div><div class="count-block" id="pCount0">0個</div>
-          </div>
-          <div class="product-row">
-            <button class="product-main" onclick="addProduct(1)"><span class="product-name" id="pName1">ワッペン2</span><span class="product-price" id="pPrice1">250円</span></button>
-            <div class="times-block">×</div><div class="count-block" id="pCount1">0個</div>
-          </div>
-          <div class="product-row">
-            <button class="product-main" onclick="addProduct(2)"><span class="product-name" id="pName2">たぬきチーフリング青</span><span class="product-price" id="pPrice2">700円</span></button>
-            <div class="times-block">×</div><div class="count-block" id="pCount2">0個</div>
-          </div>
-          <div class="product-row">
-            <button class="product-main" onclick="addProduct(3)"><span class="product-name" id="pName3">たぬきチーフリング赤</span><span class="product-price" id="pPrice3">700円</span></button>
-            <div class="times-block">×</div><div class="count-block" id="pCount3">0個</div>
-          </div>
-          <div class="product-row">
-            <button class="product-main" onclick="addProduct(4)"><span class="product-name" id="pName4">「弥栄」日本手拭い</span><span class="product-price" id="pPrice4">700円</span></button>
-            <div class="times-block">×</div><div class="count-block" id="pCount4">0個</div>
-          </div>
+          <div class="product-row" id="productRow0"><button class="product-main" onclick="addProduct(0)"><span class="product-name" id="pName0"></span><span class="product-price" id="pPrice0"></span></button><div class="times-block">×</div><div class="count-block" id="pCount0">0個</div></div>
+          <div class="product-row" id="productRow1"><button class="product-main" onclick="addProduct(1)"><span class="product-name" id="pName1"></span><span class="product-price" id="pPrice1"></span></button><div class="times-block">×</div><div class="count-block" id="pCount1">0個</div></div>
+          <div class="product-row" id="productRow2"><button class="product-main" onclick="addProduct(2)"><span class="product-name" id="pName2"></span><span class="product-price" id="pPrice2"></span></button><div class="times-block">×</div><div class="count-block" id="pCount2">0個</div></div>
+          <div class="product-row" id="productRow3"><button class="product-main" onclick="addProduct(3)"><span class="product-name" id="pName3"></span><span class="product-price" id="pPrice3"></span></button><div class="times-block">×</div><div class="count-block" id="pCount3">0個</div></div>
+          <div class="product-row" id="productRow4"><button class="product-main" onclick="addProduct(4)"><span class="product-name" id="pName4"></span><span class="product-price" id="pPrice4"></span></button><div class="times-block">×</div><div class="count-block" id="pCount4">0個</div></div>
+          <div class="product-row" id="productRow5"><button class="product-main" onclick="addProduct(5)"><span class="product-name" id="pName5"></span><span class="product-price" id="pPrice5"></span></button><div class="times-block">×</div><div class="count-block" id="pCount5">0個</div></div>
+          <div class="product-row" id="productRow6"><button class="product-main" onclick="addProduct(6)"><span class="product-name" id="pName6"></span><span class="product-price" id="pPrice6"></span></button><div class="times-block">×</div><div class="count-block" id="pCount6">0個</div></div>
+          <div class="product-row" id="productRow7"><button class="product-main" onclick="addProduct(7)"><span class="product-name" id="pName7"></span><span class="product-price" id="pPrice7"></span></button><div class="times-block">×</div><div class="count-block" id="pCount7">0個</div></div>
+          <div class="product-row" id="productRow8"><button class="product-main" onclick="addProduct(8)"><span class="product-name" id="pName8"></span><span class="product-price" id="pPrice8"></span></button><div class="times-block">×</div><div class="count-block" id="pCount8">0個</div></div>
+          <div class="product-row" id="productRow9"><button class="product-main" onclick="addProduct(9)"><span class="product-name" id="pName9"></span><span class="product-price" id="pPrice9"></span></button><div class="times-block">×</div><div class="count-block" id="pCount9">0個</div></div>
         </div>
       </section>
 
       <section class="panel">
         <div class="panel-title">今回の会計</div>
         <div class="summary-list">
-          <div class="summary-item"><span class="summary-name" id="sName0">ワッペン1</span><span class="summary-count" id="sCount0">0個</span></div>
-          <div class="summary-item"><span class="summary-name" id="sName1">ワッペン2</span><span class="summary-count" id="sCount1">0個</span></div>
-          <div class="summary-item"><span class="summary-name" id="sName2">たぬきチーフリング青</span><span class="summary-count" id="sCount2">0個</span></div>
-          <div class="summary-item"><span class="summary-name" id="sName3">たぬきチーフリング赤</span><span class="summary-count" id="sCount3">0個</span></div>
-          <div class="summary-item"><span class="summary-name" id="sName4">「弥栄」日本手拭い</span><span class="summary-count" id="sCount4">0個</span></div>
+          <div class="summary-item" id="summaryRow0"><span class="summary-name" id="sName0"></span><span class="summary-count" id="sCount0">0個</span></div>
+          <div class="summary-item" id="summaryRow1"><span class="summary-name" id="sName1"></span><span class="summary-count" id="sCount1">0個</span></div>
+          <div class="summary-item" id="summaryRow2"><span class="summary-name" id="sName2"></span><span class="summary-count" id="sCount2">0個</span></div>
+          <div class="summary-item" id="summaryRow3"><span class="summary-name" id="sName3"></span><span class="summary-count" id="sCount3">0個</span></div>
+          <div class="summary-item" id="summaryRow4"><span class="summary-name" id="sName4"></span><span class="summary-count" id="sCount4">0個</span></div>
+          <div class="summary-item" id="summaryRow5"><span class="summary-name" id="sName5"></span><span class="summary-count" id="sCount5">0個</span></div>
+          <div class="summary-item" id="summaryRow6"><span class="summary-name" id="sName6"></span><span class="summary-count" id="sCount6">0個</span></div>
+          <div class="summary-item" id="summaryRow7"><span class="summary-name" id="sName7"></span><span class="summary-count" id="sCount7">0個</span></div>
+          <div class="summary-item" id="summaryRow8"><span class="summary-name" id="sName8"></span><span class="summary-count" id="sCount8">0個</span></div>
+          <div class="summary-item" id="summaryRow9"><span class="summary-name" id="sName9"></span><span class="summary-count" id="sCount9">0個</span></div>
         </div>
         <div class="amounts">
           <div class="amount-box"><span>定価合計</span><span id="regularTotal">0円</span></div>
           <div class="amount-box paid"><span>会計金額</span><span id="paidTotal">0円</span></div>
           <div class="amount-box discount"><span>差額</span><span id="discountTotal">0円</span></div>
           <div class="actions">
-            <button class="action-button record-button" onclick="recordSale()">記録</button>
+            <button class="action-button record-button" id="recordButton" onclick="recordSale()">記録</button>
             <button class="action-button reset-button" onclick="resetCurrentSale()">リセット</button>
             <button class="action-button cancel-button" onclick="cancelLastRecord()">直前取消</button>
             <button class="action-button settings-button" onclick="openSettings()">商品・価格設定</button>
@@ -534,18 +526,10 @@
         <div class="keypad-display-label">合計金額入力</div>
         <div class="keypad-display" id="keypadDisplay">0円</div>
         <div class="keypad">
-          <button class="key" onclick="handleKey('1')">1</button>
-          <button class="key" onclick="handleKey('2')">2</button>
-          <button class="key" onclick="handleKey('3')">3</button>
-          <button class="key" onclick="handleKey('4')">4</button>
-          <button class="key" onclick="handleKey('5')">5</button>
-          <button class="key" onclick="handleKey('6')">6</button>
-          <button class="key" onclick="handleKey('7')">7</button>
-          <button class="key" onclick="handleKey('8')">8</button>
-          <button class="key" onclick="handleKey('9')">9</button>
-          <button class="key control" onclick="handleKey('clear')">C</button>
-          <button class="key" onclick="handleKey('0')">0</button>
-          <button class="key control" onclick="handleKey('backspace')">←</button>
+          <button class="key" onclick="handleKey('1')">1</button><button class="key" onclick="handleKey('2')">2</button><button class="key" onclick="handleKey('3')">3</button>
+          <button class="key" onclick="handleKey('4')">4</button><button class="key" onclick="handleKey('5')">5</button><button class="key" onclick="handleKey('6')">6</button>
+          <button class="key" onclick="handleKey('7')">7</button><button class="key" onclick="handleKey('8')">8</button><button class="key" onclick="handleKey('9')">9</button>
+          <button class="key control" onclick="handleKey('clear')">C</button><button class="key" onclick="handleKey('0')">0</button><button class="key control" onclick="handleKey('backspace')">←</button>
         </div>
         <button class="restore-button" onclick="restoreRegularPrice()">定価に戻す</button>
       </section>
@@ -554,14 +538,20 @@
     <section id="settingsScreen" class="settings-screen">
       <div>
         <div class="settings-title">商品・価格設定</div>
-        <div class="settings-note">商品名と価格を変更できます。保存後、次の会計から反映されます。</div>
+        <div class="settings-note">商品の追加・消去、商品名と価格の変更ができます。最大10商品まで登録できます。</div>
       </div>
+      <button class="add-product-button" onclick="addSettingProduct()">商品を追加</button>
       <div class="settings-list">
-        <div class="settings-row"><input id="setName0" type="text"><input class="settings-price-input" id="setPrice0" type="number" min="0" step="1"><div class="yen-label">円</div></div>
-        <div class="settings-row"><input id="setName1" type="text"><input class="settings-price-input" id="setPrice1" type="number" min="0" step="1"><div class="yen-label">円</div></div>
-        <div class="settings-row"><input id="setName2" type="text"><input class="settings-price-input" id="setPrice2" type="number" min="0" step="1"><div class="yen-label">円</div></div>
-        <div class="settings-row"><input id="setName3" type="text"><input class="settings-price-input" id="setPrice3" type="number" min="0" step="1"><div class="yen-label">円</div></div>
-        <div class="settings-row"><input id="setName4" type="text"><input class="settings-price-input" id="setPrice4" type="number" min="0" step="1"><div class="yen-label">円</div></div>
+        <div class="settings-row" id="setRow0"><input id="setName0" type="text"><input class="settings-price-input" id="setPrice0" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(0)">消去</button></div>
+        <div class="settings-row" id="setRow1"><input id="setName1" type="text"><input class="settings-price-input" id="setPrice1" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(1)">消去</button></div>
+        <div class="settings-row" id="setRow2"><input id="setName2" type="text"><input class="settings-price-input" id="setPrice2" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(2)">消去</button></div>
+        <div class="settings-row" id="setRow3"><input id="setName3" type="text"><input class="settings-price-input" id="setPrice3" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(3)">消去</button></div>
+        <div class="settings-row" id="setRow4"><input id="setName4" type="text"><input class="settings-price-input" id="setPrice4" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(4)">消去</button></div>
+        <div class="settings-row" id="setRow5"><input id="setName5" type="text"><input class="settings-price-input" id="setPrice5" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(5)">消去</button></div>
+        <div class="settings-row" id="setRow6"><input id="setName6" type="text"><input class="settings-price-input" id="setPrice6" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(6)">消去</button></div>
+        <div class="settings-row" id="setRow7"><input id="setName7" type="text"><input class="settings-price-input" id="setPrice7" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(7)">消去</button></div>
+        <div class="settings-row" id="setRow8"><input id="setName8" type="text"><input class="settings-price-input" id="setPrice8" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(8)">消去</button></div>
+        <div class="settings-row" id="setRow9"><input id="setName9" type="text"><input class="settings-price-input" id="setPrice9" type="number" min="0" step="1"><div class="yen-label">円</div><button class="small-button" onclick="deleteSettingProduct(9)">消去</button></div>
       </div>
       <div class="settings-actions">
         <button class="danger-outline" onclick="clearAllData()">全データ削除</button>
@@ -570,6 +560,7 @@
       </div>
     </section>
   </div>
+  <div class="toast" id="recordToast">記録しました</div>
 
   <script>
     window.onerror = function(message, source, line) {
@@ -577,22 +568,30 @@
       return false;
     };
 
-    var STORAGE_PRODUCTS = 'shiga_rs_products_static_v1';
-    var STORAGE_RECORDS = 'shiga_rs_records_static_v1';
+    var STORAGE_PRODUCTS = 'shiga_rs_products_slots_v1';
+    var STORAGE_RECORDS = 'shiga_rs_records_slots_v1';
+    var MAX_PRODUCTS = 10;
 
     var products = [
-      { id: 'item1', name: 'ワッペン1', price: 250 },
-      { id: 'item2', name: 'ワッペン2', price: 250 },
-      { id: 'item3', name: 'たぬきチーフリング青', price: 700 },
-      { id: 'item4', name: 'たぬきチーフリング赤', price: 700 },
-      { id: 'item5', name: '「弥栄」日本手拭い', price: 700 }
+      { id: 'item1', name: 'ワッペン1', price: 250, active: true },
+      { id: 'item2', name: 'ワッペン2', price: 250, active: true },
+      { id: 'item3', name: 'たぬきチーフリング青', price: 700, active: true },
+      { id: 'item4', name: 'たぬきチーフリング赤', price: 700, active: true },
+      { id: 'item5', name: '「弥栄」日本手拭い', price: 700, active: true },
+      { id: 'item6', name: '新商品6', price: 0, active: false },
+      { id: 'item7', name: '新商品7', price: 0, active: false },
+      { id: 'item8', name: '新商品8', price: 0, active: false },
+      { id: 'item9', name: '新商品9', price: 0, active: false },
+      { id: 'item10', name: '新商品10', price: 0, active: false }
     ];
 
-    var counts = [0, 0, 0, 0, 0];
+    var settingProducts = [];
+    var counts = [0,0,0,0,0,0,0,0,0,0];
     var records = [];
     var paidInput = '';
     var manualPaid = false;
     var noticeTimer = null;
+    var toastTimer = null;
 
     initApp();
 
@@ -609,9 +608,13 @@
       if (!saved) return;
       try {
         var parsed = JSON.parse(saved);
-        for (var i = 0; i < products.length; i++) {
-          if (parsed[i] && parsed[i].name) products[i].name = String(parsed[i].name);
-          if (parsed[i] && !isNaN(Number(parsed[i].price))) products[i].price = Number(parsed[i].price);
+        if (!parsed || !parsed.length) return;
+        for (var i = 0; i < MAX_PRODUCTS; i++) {
+          if (parsed[i]) {
+            products[i].name = parsed[i].name ? String(parsed[i].name) : products[i].name;
+            products[i].price = !isNaN(Number(parsed[i].price)) ? Number(parsed[i].price) : products[i].price;
+            products[i].active = parsed[i].active ? true : false;
+          }
         }
       } catch (e) {}
     }
@@ -635,7 +638,9 @@
     }
 
     function updateScreen() {
-      for (var i = 0; i < products.length; i++) {
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        setDisplay('productRow' + i, products[i].active ? 'grid' : 'none');
+        setDisplay('summaryRow' + i, products[i].active ? 'flex' : 'none');
         text('pName' + i, products[i].name);
         text('pPrice' + i, yen(products[i].price));
         text('pCount' + i, counts[i] + '個');
@@ -645,7 +650,6 @@
 
       var regular = getRegularTotal();
       var paid = manualPaid ? Number(paidInput || 0) : regular;
-
       text('regularTotal', yen(regular));
       text('paidTotal', yen(paid));
       text('discountTotal', yen(regular - paid));
@@ -658,23 +662,33 @@
       if (el) el.textContent = value;
     }
 
+    function setDisplay(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.style.display = value;
+    }
+
     function yen(value) {
       return Number(value || 0).toLocaleString('ja-JP') + '円';
     }
 
     function getRegularTotal() {
       var sum = 0;
-      for (var i = 0; i < products.length; i++) sum += products[i].price * counts[i];
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (products[i].active) sum += products[i].price * counts[i];
+      }
       return sum;
     }
 
     function getTotalCount() {
       var sum = 0;
-      for (var i = 0; i < counts.length; i++) sum += counts[i];
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (products[i].active) sum += counts[i];
+      }
       return sum;
     }
 
     function addProduct(index) {
+      if (!products[index].active) return;
       counts[index] += 1;
       showNotice('');
       updateScreen();
@@ -700,7 +714,7 @@
     }
 
     function resetCurrentSale() {
-      counts = [0, 0, 0, 0, 0];
+      counts = [0,0,0,0,0,0,0,0,0,0];
       manualPaid = false;
       paidInput = '';
       updateScreen();
@@ -717,27 +731,27 @@
       var paid = manualPaid ? Number(paidInput || 0) : regular;
       var items = [];
 
-      for (var i = 0; i < products.length; i++) {
-        items.push({
-          id: products[i].id,
-          name: products[i].name,
-          count: counts[i],
-          price: products[i].price
-        });
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (products[i].active) {
+          items.push({ id: products[i].id, name: products[i].name, count: counts[i], price: products[i].price });
+        }
       }
 
-      records.push({
-        datetime: formatDatetime(new Date()),
-        items: items,
-        regularTotal: regular,
-        paidTotal: paid,
-        discount: regular - paid
-      });
-
+      records.push({ datetime: formatDatetime(new Date()), items: items, regularTotal: regular, paidTotal: paid, discount: regular - paid });
       saveRecords();
+      showRecordAction();
       resetCurrentSale();
       updateScreen();
-      showNotice('記録しました。', 1400);
+    }
+
+    function showRecordAction() {
+      var btn = document.getElementById('recordButton');
+      var toast = document.getElementById('recordToast');
+      btn.className = btn.className.replace(' flash', '') + ' flash';
+      setTimeout(function() { btn.className = btn.className.replace(' flash', ''); }, 600);
+      toast.className = 'toast show';
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function() { toast.className = 'toast'; }, 720);
     }
 
     function cancelLastRecord() {
@@ -764,12 +778,52 @@
     }
 
     function openSettings() {
-      for (var i = 0; i < products.length; i++) {
-        document.getElementById('setName' + i).value = products[i].name;
-        document.getElementById('setPrice' + i).value = products[i].price;
-      }
+      settingProducts = cloneProducts(products);
+      renderSettings();
       document.getElementById('mainScreen').style.display = 'none';
       document.getElementById('settingsScreen').style.display = 'flex';
+    }
+
+    function cloneProducts(source) {
+      var arr = [];
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        arr.push({ id: source[i].id, name: source[i].name, price: source[i].price, active: source[i].active });
+      }
+      return arr;
+    }
+
+    function renderSettings() {
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        var row = document.getElementById('setRow' + i);
+        row.style.display = settingProducts[i].active ? 'grid' : 'none';
+        document.getElementById('setName' + i).value = settingProducts[i].name;
+        document.getElementById('setPrice' + i).value = settingProducts[i].price;
+      }
+    }
+
+    function addSettingProduct() {
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (!settingProducts[i].active) {
+          settingProducts[i].active = true;
+          settingProducts[i].name = '新商品' + (i + 1);
+          settingProducts[i].price = 0;
+          renderSettings();
+          return;
+        }
+      }
+      alert('商品は最大10個までです。');
+    }
+
+    function deleteSettingProduct(index) {
+      var activeCount = 0;
+      for (var i = 0; i < MAX_PRODUCTS; i++) if (settingProducts[i].active) activeCount++;
+      if (activeCount <= 1) {
+        alert('商品は最低1つ必要です。');
+        return;
+      }
+      if (!confirm('この商品を消去しますか？')) return;
+      settingProducts[index].active = false;
+      renderSettings();
     }
 
     function closeSettingsWithoutSaving() {
@@ -779,30 +833,25 @@
     }
 
     function saveSettingsAndReturn() {
-      for (var i = 0; i < products.length; i++) {
-        var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, '');
-        var price = Number(document.getElementById('setPrice' + i).value);
-        if (!name) {
-          alert('商品名は空欄にできません。');
-          return;
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (settingProducts[i].active) {
+          var name = document.getElementById('setName' + i).value.replace(/^\s+|\s+$/g, '');
+          var price = Number(document.getElementById('setPrice' + i).value);
+          if (!name) { alert('商品名は空欄にできません。'); return; }
+          if (isNaN(price) || price < 0) { alert('価格は0円以上の数字で入力してください。'); return; }
+          settingProducts[i].name = name;
+          settingProducts[i].price = Math.round(price);
         }
-        if (isNaN(price) || price < 0) {
-          alert('価格は0円以上の数字で入力してください。');
-          return;
-        }
-        products[i].name = name;
-        products[i].price = Math.round(price);
       }
+      products = cloneProducts(settingProducts);
       saveProducts();
       closeSettingsWithoutSaving();
       updateScreen();
-      showNotice('商品名と価格を保存しました。', 1400);
+      showNotice('商品設定を保存しました。', 1400);
     }
 
     function exportCsvOnly() {
-      if (exportCsv('滋賀RS会計_通常出力')) {
-        showNotice('CSVを出力しました。記録は残っています。', 1800);
-      }
+      if (exportCsv('滋賀RS会計_通常出力')) showNotice('CSVを出力しました。記録は残っています。', 1800);
     }
 
     function finishAccounting() {
@@ -824,23 +873,22 @@
         showNotice('出力する記録がありません。', 1600);
         return false;
       }
-
+      var exportProducts = getExportProducts();
       var headers = ['日時'];
-      for (var i = 0; i < products.length; i++) {
-        headers.push(products[i].name + '_商品名');
-        headers.push(products[i].name + '_個数');
-        headers.push(products[i].name + '_単価');
+      for (var i = 0; i < exportProducts.length; i++) {
+        headers.push(exportProducts[i].name + '_商品名');
+        headers.push(exportProducts[i].name + '_個数');
+        headers.push(exportProducts[i].name + '_単価');
       }
       headers.push('定価合計');
       headers.push('会計金額');
       headers.push('差額');
 
       var lines = [csvLine(headers)];
-
       for (var r = 0; r < records.length; r++) {
         var row = [records[r].datetime];
-        for (var p = 0; p < products.length; p++) {
-          var item = findRecordItem(records[r].items, products[p].id);
+        for (var p = 0; p < exportProducts.length; p++) {
+          var item = findRecordItem(records[r].items, exportProducts[p].id);
           row.push(item ? item.name : '');
           row.push(item ? item.count : 0);
           row.push(item ? item.price : 0);
@@ -863,10 +911,25 @@
       return true;
     }
 
-    function findRecordItem(items, id) {
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].id === id) return items[i];
+    function getExportProducts() {
+      var arr = [];
+      for (var i = 0; i < MAX_PRODUCTS; i++) {
+        if (products[i].active || productAppearsInRecords(products[i].id)) arr.push(products[i]);
       }
+      return arr;
+    }
+
+    function productAppearsInRecords(id) {
+      for (var r = 0; r < records.length; r++) {
+        for (var i = 0; i < records[r].items.length; i++) {
+          if (records[r].items[i].id === id && records[r].items[i].count > 0) return true;
+        }
+      }
+      return false;
+    }
+
+    function findRecordItem(items, id) {
+      for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i];
       return null;
     }
 
@@ -878,35 +941,14 @@
 
     function csvEscape(value) {
       var text = String(value == null ? '' : value);
-      if (text.indexOf(',') >= 0 || text.indexOf('"') >= 0 || text.indexOf('\n') >= 0 || text.indexOf('\r') >= 0) {
-        return '"' + text.replace(/"/g, '""') + '"';
-      }
+      if (text.indexOf(',') >= 0 || text.indexOf('"') >= 0 || text.indexOf('\n') >= 0 || text.indexOf('\r') >= 0) return '"' + text.replace(/"/g, '""') + '"';
       return text;
     }
 
     function clearAllData() {
       if (!confirm('保存済みの売上記録と商品・価格設定をすべて削除します。よろしいですか？')) return;
-      try {
-        localStorage.removeItem(STORAGE_PRODUCTS);
-        localStorage.removeItem(STORAGE_RECORDS);
-      } catch (e) {}
-      products = [
-        { id: 'item1', name: 'ワッペン1', price: 250 },
-        { id: 'item2', name: 'ワッペン2', price: 250 },
-        { id: 'item3', name: 'たぬきチーフリング青', price: 700 },
-        { id: 'item4', name: 'たぬきチーフリング赤', price: 700 },
-        { id: 'item5', name: '「弥栄」日本手拭い', price: 700 }
-      ];
-      records = [];
-      counts = [0, 0, 0, 0, 0];
-      manualPaid = false;
-      paidInput = '';
-      saveProducts();
-      saveRecords();
-      document.getElementById('settingsScreen').style.display = 'none';
-      document.getElementById('mainScreen').style.display = 'grid';
-      updateScreen();
-      showNotice('全データを削除しました。', 1800);
+      try { localStorage.removeItem(STORAGE_PRODUCTS); localStorage.removeItem(STORAGE_RECORDS); } catch (e) {}
+      location.reload();
     }
 
     function formatDatetime(date) {
@@ -927,9 +969,7 @@
       if (!el) return;
       el.textContent = message;
       if (noticeTimer) clearTimeout(noticeTimer);
-      if (duration) {
-        noticeTimer = setTimeout(function() { el.textContent = ''; }, duration);
-      }
+      if (duration) noticeTimer = setTimeout(function() { el.textContent = ''; }, duration);
     }
   </script>
 </body>
