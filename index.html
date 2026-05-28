@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>滋賀RS会計システム-全国大会2026千葉</title>
   <style>
     :root {
@@ -25,6 +25,7 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      touch-action: manipulation;
     }
 
     html, body {
@@ -570,6 +571,19 @@
   <div class="toast" id="recordToast">記録しました</div>
 
   <script>
+    document.addEventListener('dblclick', function(event) {
+      event.preventDefault();
+    }, { passive: false });
+
+    var lastTouchEndTime = 0;
+    document.addEventListener('touchend', function(event) {
+      var now = Date.now();
+      if (now - lastTouchEndTime <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEndTime = now;
+    }, { passive: false });
+
     window.onerror = function(message, source, line) {
       alert('JavaScriptエラー: ' + message + ' 行:' + line);
       return false;
