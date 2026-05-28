@@ -18,7 +18,7 @@
       --orange: #f59e0b;
       --dark: #111827;
       --shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
-      --radius: 16px;
+      --radius: 14px;
     }
 
     * {
@@ -45,12 +45,12 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 8px;
-      gap: 8px;
+      padding: 6px;
+      gap: 6px;
     }
 
     .header {
-      height: 48px;
+      height: 42px;
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -63,7 +63,7 @@
     }
 
     .title {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
       white-space: nowrap;
       overflow: hidden;
@@ -72,7 +72,7 @@
 
     .record-count {
       color: var(--blue);
-      font-size: 23px;
+      font-size: 21px;
       font-weight: 900;
       white-space: nowrap;
     }
@@ -82,23 +82,23 @@
       min-height: 0;
       display: grid;
       grid-template-columns: 1.45fr 0.85fr 1fr;
-      gap: 8px;
+      gap: 6px;
     }
 
     .panel {
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 10px;
+      padding: 8px;
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       overflow: hidden;
     }
 
     .panel-title {
-      font-size: 21px;
+      font-size: 19px;
       font-weight: 900;
       flex-shrink: 0;
     }
@@ -108,15 +108,15 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .product-row {
       flex: 1;
-      min-height: 44px;
+      min-height: 38px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 48px 80px;
-      gap: 7px;
+      grid-template-columns: minmax(0, 1fr) 44px 72px;
+      gap: 6px;
     }
 
     .product-main {
@@ -125,8 +125,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 0 14px;
-      border-radius: 14px;
+      padding: 0 12px;
+      border-radius: 12px;
       background: #eef4ff;
       color: #123c7c;
       border: 2px solid #c7d9ff;
@@ -139,7 +139,7 @@
     }
 
     .product-name {
-      font-size: 22px;
+      font-size: 20px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -147,7 +147,7 @@
     }
 
     .product-price {
-      font-size: 20px;
+      font-size: 18px;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -156,33 +156,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 14px;
+      border-radius: 12px;
       background: #f9fafb;
       border: 2px solid var(--line);
       font-weight: 900;
     }
 
-    .times-block { font-size: 26px; color: var(--muted); }
+    .times-block { font-size: 22px; color: var(--muted); }
     .count-block { font-size: 22px; }
 
     .summary-list {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       min-height: 0;
     }
 
     .summary-item {
-      min-height: 31px;
-      padding: 6px 9px;
-      border-radius: 11px;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 10px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 800;
     }
 
@@ -199,28 +199,28 @@
       margin-top: auto;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
 
     .amount-box {
-      min-height: 38px;
-      border-radius: 12px;
+      min-height: 32px;
+      border-radius: 11px;
       background: #f3f4f6;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 7px 10px;
-      font-size: 18px;
+      padding: 5px 9px;
+      font-size: 16px;
       font-weight: 900;
     }
 
     .amount-box.paid {
-      min-height: 44px;
+      min-height: 38px;
       background: #ecfdf5;
       border: 2px solid #a7f3d0;
       color: #065f46;
-      font-size: 22px;
+      font-size: 19px;
     }
 
     .amount-box.discount { background: #fff7ed; color: #9a3412; }
@@ -228,24 +228,24 @@
     .actions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 7px;
+      gap: 6px;
     }
 
     .action-button {
-      min-height: 36px;
-      border-radius: 12px;
+      min-height: 30px;
+      border-radius: 11px;
       color: white;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
     }
 
     .record-button {
       grid-column: span 2;
-      min-height: 92px;
+      min-height: 78px;
       background: var(--green);
-      font-size: 34px;
-      border: 4px solid #bbf7d0;
+      font-size: 30px;
+      border: 3px solid #bbf7d0;
     }
 
     .record-button.flash {
@@ -265,21 +265,21 @@
     .finish-button { grid-column: span 2; background: var(--orange); }
 
     .notice {
-      min-height: 20px;
-      font-size: 15px;
+      min-height: 16px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--blue);
     }
 
     .keypad-display-label {
-      font-size: 19px;
+      font-size: 17px;
       font-weight: 900;
       color: var(--muted);
       flex-shrink: 0;
     }
 
     .keypad-display {
-      height: 70px;
+      height: 58px;
       border-radius: 16px;
       background: var(--dark);
       color: white;
@@ -287,7 +287,7 @@
       align-items: center;
       justify-content: flex-end;
       padding: 0 18px;
-      font-size: 48px;
+      font-size: 42px;
       font-weight: 900;
       letter-spacing: 0.03em;
       flex-shrink: 0;
@@ -298,32 +298,32 @@
       min-height: 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
+      gap: 7px;
     }
 
     .key {
-      min-height: 50px;
-      border-radius: 16px;
+      min-height: 42px;
+      border-radius: 14px;
       background: white;
       border: 2px solid var(--line);
-      font-size: 40px;
+      font-size: 34px;
       font-weight: 900;
       color: var(--text);
       box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
     }
 
     .key.control {
-      font-size: 28px;
+      font-size: 24px;
       background: #fef3c7;
       border-color: #fcd34d;
     }
 
     .restore-button {
-      min-height: 50px;
-      border-radius: 16px;
+      min-height: 42px;
+      border-radius: 14px;
       background: var(--blue);
       color: white;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
       flex-shrink: 0;
@@ -331,7 +331,7 @@
 
     .toast {
       position: fixed;
-      top: 72px;
+      top: 58px;
       left: 50%;
       transform: translateX(-50%) translateY(-12px);
       opacity: 0;
@@ -339,9 +339,9 @@
       z-index: 9999;
       background: #16a34a;
       color: white;
-      padding: 16px 32px;
+      padding: 12px 28px;
       border-radius: 999px;
-      font-size: 30px;
+      font-size: 26px;
       font-weight: 900;
       box-shadow: 0 10px 28px rgba(15, 23, 42, 0.28);
       transition: opacity 0.18s ease, transform 0.18s ease;
