@@ -14,7 +14,7 @@
       --blue: #2563eb;
       --green: #16a34a;
       --red: #dc2626;
-      --brown: #7c2d12;
+      --brown: #475569;
       --orange: #f59e0b;
       --dark: #111827;
       --shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
@@ -321,7 +321,9 @@
     .utility-actions .action-button {
       min-height: 28px;
       font-size: 12px;
-      opacity: 0.92;
+      opacity: 0.78;
+      box-shadow: none;
+      filter: saturate(0.72);
     }
 
     .record-helper {
@@ -336,10 +338,10 @@
 
     .reset-button { background: var(--red); }
     .cancel-button { background: var(--brown); }
-    .settings-button { background: #4b5563; }
-    .csv-button { background: var(--blue); }
-    .finish-button { background: var(--orange); }
-    .history-button { background: #9333ea; }
+    .settings-button { background: #64748b; }
+    .csv-button { background: #3b82f6; }
+    .finish-button { background: #f59e0b; }
+    .history-button { background: #7c3aed; }
     .guard-button { background: #0891b2; }
 
     .notice {
@@ -459,7 +461,7 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     .bottom-spacer {
-      height: 68px;
+      height: 120px;
       flex-shrink: 0;
       background: transparent;
     }
@@ -638,7 +640,7 @@
       <section class="panel keypad-panel">
         <div class="right-actions">
           <button class="action-button reset-button" onclick="resetCurrentSale()">リセット</button>
-          <button class="action-button cancel-button" onclick="cancelLastRecord()">直前取消</button>
+          <button class="action-button cancel-button" onclick="cancelLastRecord()">最後の記録を取り消す</button>
         </div>
 
         <div class="keypad-display-label" id="keypadLabel">合計金額入力</div>
